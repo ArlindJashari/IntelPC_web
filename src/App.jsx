@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Hero } from './components/Hero.jsx';
 import { InfoBar } from './components/InfoBar.jsx';
 import { Tabs } from './components/Tabs.jsx';
@@ -9,6 +9,15 @@ import { ChallengesPanel } from './components/ChallengesPanel.jsx';
 import { PhotoWallPanel } from './components/PhotoWallPanel.jsx';
 import { UploadModal } from './components/UploadModal.jsx';
 import ShapeGrid from './components/ShapeGrid.jsx';
+import { tabs } from './data/campaignData.js';
+
+const DEFAULT_TAB = 'challenges';
+const TAB_IDS = new Set(tabs.map((tab) => tab.id));
+
+function getTabFromHash() {
+  const hashTab = window.location.hash.replace('#', '');
+  return TAB_IDS.has(hashTab) ? hashTab : DEFAULT_TAB;
+}
 
 function ActivePanel({ activeTab, onUpload }) {
   switch (activeTab) {
@@ -27,8 +36,29 @@ function ActivePanel({ activeTab, onUpload }) {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('challenges');
+  const [activeTab, setActiveTab] = useState(getTabFromHash);
   const [uploadChallenge, setUploadChallenge] = useState(null);
+
+  useEffect(() => {
+    const syncFromHash = () => {
+      setActiveTab(getTabFromHash());
+    };
+
+    window.addEventListener('hashchange', syncFromHash);
+    if (!window.location.hash || !TAB_IDS.has(window.location.hash.replace('#', ''))) {
+      window.history.replaceState(null, '', `#${DEFAULT_TAB}`);
+    }
+
+    return () => window.removeEventListener('hashchange', syncFromHash);
+  }, []);
+
+  const setActiveTabWithLink = (tabId) => {
+    if (!TAB_IDS.has(tabId)) return;
+    setActiveTab(tabId);
+    if (window.location.hash !== `#${tabId}`) {
+      window.location.hash = tabId;
+    }
+  };
 
   return (
     <div className="app-shell">
@@ -50,9 +80,9 @@ export default function App() {
         <span className="page-screw screw-three" />
         <span className="page-screw screw-four" />
 
-        <Hero activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Hero activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
         <InfoBar />
-        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Tabs activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
         <ActivePanel activeTab={activeTab} onUpload={setUploadChallenge} />
       </main>
 
