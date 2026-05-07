@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>IPC 2026 — Challenge System Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background: #0a1638; color: #fff; min-height: 100vh; }
+
+  /* ---- Page Container ---- */
+  .page { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+  /* ---- Hero ---- */
+  .hero {
+    background: linear-gradient(180deg, #00285A 0%, #0a1638 100%);
+    border: 1px solid #1a3a7a;
+    border-radius: 12px;
+    padding: 48px 32px;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(0,199,253,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-logo {
+    font-size: 42px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #ffffff;
+    margin-bottom: 8px;
+    position: relative;
+  }
+  .hero-subtitle {
+    font-size: 16px;
+    color: #9fb4d9;
+    letter-spacing: 1px;
+    position: relative;
+  }
+  .hero-note {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 11px;
+    color: #6a7fa8;
+    background: rgba(255,255,255,0.05);
+    padding: 4px 10px;
+    border-radius: 4px;
+    position: relative;
+  }
+
+  /* ---- Info Bar (persistent) ---- */
+  .info-bar {
+    display: flex;
+    gap: 0;
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+  .stat {
+    flex: 1;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #9fb4d9;
+    border-right: 1px solid #1a3a7a;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-icon {
+    width: 18px; height: 18px; flex-shrink: 0;
+  }
+  .stat-text {
+    display: inline;
+    min-width: 0;
+  }
+  .stat-label::after { content: ':\00a0'; }
+  .stat-value { font-weight: 600; color: #fff; }
+  .stat-value + .stat-value::before { content: '\00a0\00b7\00a0'; color: #6a7fa8; font-weight: normal; }
+  .stat-qualifier { margin-left: 4px; color: #9fb4d9; }
+
+  /* ---- Tab Nav ---- */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 8px;
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 8px;
+  }
+  .tab {
+    flex: 1;
+    padding: 12px 16px;
+    background: transparent;
+    color: #9fb4d9;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .tab:hover { background: rgba(0,104,181,0.2); color: #fff; }
+  .tab.active {
+    background: #0068B5;
+    color: #fff;
+    border-color: #00C7FD;
+    box-shadow: inset 0 -3px 0 #00C7FD;
+  }
+
+  /* ---- Tab Panels ---- */
+  .panel { display: none; animation: fadeIn 0.3s; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .panel-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #1a3a7a;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 24px 0 16px;
+    color: #00C7FD;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* ---- Placeholder panel content ---- */
+  .placeholder-block {
+    background: #0f1f4d;
+    border: 1px dashed #1a3a7a;
+    border-radius: 8px;
+    padding: 32px;
+    text-align: center;
+    color: #6a7fa8;
+    font-style: italic;
+  }
+
+  /* ---- Challenge Cards ---- */
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+  }
+  .challenge-card {
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .challenge-card.complete { border-color: #10b981; background: #0f1f4d; }
+  .challenge-card.denied { border-color: #ef4444; }
+  .challenge-card.pending { border-color: #f59e0b; }
+
+  .challenge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .challenge-name { font-size: 15px; font-weight: 600; color: #fff; line-height: 1.3; }
+  .challenge-type { font-size: 11px; color: #6a7fa8; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+  .status-badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .status-not-started { background: #2a3a5a; color: #9fb4d9; }
+  .status-in-progress { background: #0068B5; color: #fff; }
+  .status-pending { background: #f59e0b; color: #0a1638; }
+  .status-approved { background: #10b981; color: #fff; }
+  .status-complete { background: #10b981; color: #fff; }
+  .status-denied { background: #ef4444; color: #fff; }
+
+  /* Progress bar (training pair challenges) */
+  .progress-wrap { display: flex; align-items: center; gap: 10px; }
+  .progress-bar {
+    flex: 1;
+    height: 8px;
+    background: #1a2d5a;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #0068B5, #00C7FD);
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+  .progress-fill.complete { background: linear-gradient(90deg, #10b981, #34d399); }
+  .progress-text { font-size: 12px; color: #9fb4d9; font-weight: 600; white-space: nowrap; }
+
+  /* Challenge description */
+  .challenge-desc { font-size: 13px; color: #9fb4d9; line-height: 1.5; }
+  .denial-reason {
+    font-size: 12px;
+    color: #fca5a5;
+    background: rgba(239,68,68,0.1);
+    border-left: 3px solid #ef4444;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
+  .denial-reason strong { color: #ef4444; display: block; margin-bottom: 2px; }
+
+  /* Action buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: #0068B5; color: #fff; }
+  .btn-primary:hover { background: #0080d0; }
+  .btn-secondary { background: #2a3a5a; color: #fff; }
+  .btn-secondary:hover { background: #3a4a6a; }
+  .btn-full { width: 100%; }
+
+  /* ---- Store Challenge Section ---- */
+  .store-challenge {
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .store-status-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.3);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    color: #fbbf24;
+    font-size: 14px;
+  }
+  .store-status-banner.qualified {
+    background: rgba(16,185,129,0.1);
+    border-color: rgba(16,185,129,0.3);
+    color: #34d399;
+  }
+  .criteria-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .criteria-grid { grid-template-columns: 1fr; } }
+  .criterion {
+    background: #0a1638;
+    border: 1px solid #1a3a7a;
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .criterion-label {
+    font-size: 12px;
+    color: #9fb4d9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+  .criterion-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 12px;
+  }
+  .criterion-value.met { color: #34d399; }
+  .criterion-target { color: #6a7fa8; font-size: 16px; font-weight: 500; }
+
+  /* ---- Photo Wall ---- */
+  .filter-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .chip {
+    padding: 8px 16px;
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    color: #9fb4d9;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .chip:hover { background: #1a2d5a; color: #fff; }
+  .chip.active {
+    background: #0068B5;
+    color: #fff;
+    border-color: #0068B5;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+  .photo-card {
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .photo-card:hover { transform: translateY(-2px); }
+  .photo-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    text-align: center;
+    padding: 8px;
+    font-style: italic;
+  }
+  .photo-image.team { background: linear-gradient(135deg, #0068B5, #003f6e); }
+  .photo-image.lenovo { background: linear-gradient(135deg, #E31B23, #7a0f14); }
+  .photo-image.acer { background: linear-gradient(135deg, #10b981, #065f46); }
+  .photo-image.norton { background: linear-gradient(135deg, #f59e0b, #78350f); }
+
+  .photo-body { padding: 12px 14px; }
+  .photo-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .photo-uploader {
+    font-size: 12px;
+    color: #9fb4d9;
+    margin-bottom: 10px;
+  }
+  .photo-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  .heart-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #6a7fa8;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+  .heart-btn:hover { background: rgba(239,68,68,0.1); color: #ef4444; }
+  .heart-btn.active { color: #ef4444; }
+  .heart-btn svg { width: 16px; height: 16px; }
+
+  /* ---- Upload Modal ---- */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 12px;
+    padding: 28px;
+    max-width: 500px;
+    width: 100%;
+    animation: modalIn 0.2s;
+  }
+  @keyframes modalIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .modal-title { font-size: 20px; font-weight: 700; }
+  .modal-close {
+    background: transparent;
+    border: none;
+    color: #9fb4d9;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+  }
+  .modal-close:hover { color: #fff; }
+  .modal-context {
+    background: rgba(0,104,181,0.15);
+    border-left: 3px solid #0068B5;
+    padding: 10px 14px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #9fb4d9;
+  }
+  .modal-context strong { color: #00C7FD; }
+  .drop-zone {
+    border: 2px dashed #1a3a7a;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    background: rgba(0,0,0,0.2);
+  }
+  .drop-zone-main { color: #9fb4d9; font-size: 15px; margin-bottom: 12px; }
+  .drop-zone-or { color: #6a7fa8; font-size: 12px; margin: 10px 0; }
+
+  /* Caption field */
+  .caption-field { margin-bottom: 20px; }
+  .caption-label {
+    display: block;
+    font-size: 12px;
+    color: #9fb4d9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .caption-optional {
+    text-transform: none;
+    letter-spacing: 0;
+    color: #6a7fa8;
+    font-weight: 500;
+    font-size: 11px;
+    margin-left: 4px;
+  }
+  .caption-input {
+    width: 100%;
+    background: rgba(0,0,0,0.25);
+    border: 1px solid #1a3a7a;
+    color: #fff;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+  }
+  .caption-input:focus { border-color: #00C7FD; outline: none; }
+  .caption-input::placeholder { color: #6a7fa8; }
+  .caption-hint {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #6a7fa8;
+    margin-top: 6px;
+    font-style: italic;
+  }
+  .caption-hint #caption-count { font-style: normal; }
+
+  .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+  /* ---- Icons ---- */
+  .icon-check { color: #34d399; }
+  .icon-warning { color: #f59e0b; }
+
+  /* ---- Annotations (for Trokit reference) ---- */
+  .annotation {
+    background: #1a2d5a;
+    border-left: 4px solid #00C7FD;
+    padding: 10px 14px;
+    margin: 12px 0;
+    font-size: 12px;
+    color: #9fb4d9;
+    border-radius: 0 6px 6px 0;
+  }
+  .annotation strong { color: #00C7FD; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+
+  /* Prizes tab table-like layout */
+  .prize-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .prize-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #1a3a7a;
+    color: #9fb4d9;
+    font-size: 13px;
+  }
+  .prize-row:last-child { border-bottom: none; }
+
+  /* Trainings tab — matching the Score with Intel Core reference */
+  .training-week { margin-bottom: 28px; }
+  .training-week-title {
+    font-size: 15px;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1a3a7a;
+    margin-bottom: 14px;
+  }
+  .training-week-title.current { color: #00C7FD; }
+  .training-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .training-card {
+    background: #0f1f4d;
+    border: 1px solid #1a3a7a;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .training-thumb {
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, #00285A, #0a1638);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .training-thumb.complete::after {
+    content: '✓';
+    position: absolute;
+    width: 36px; height: 36px;
+    background: #10b981;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .training-thumb-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .training-name {
+    padding: 10px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  /* Footer note */
+  .footer-note {
+    margin-top: 24px;
+    padding: 14px;
+    background: rgba(0,104,181,0.1);
+    border: 1px solid rgba(0,104,181,0.3);
+    border-radius: 6px;
+    font-size: 12px;
+    color: #9fb4d9;
+    text-align: center;
+  }
+
+  /* ================================================== */
+  /* ============= MOBILE OPTIMIZATIONS =============== */
+  /* ================================================== */
+  @media (max-width: 768px) {
+    .page { padding: 14px; }
+    .hero { padding: 32px 16px; }
+    .hero-logo { font-size: 30px; letter-spacing: 1px; }
+    .hero-subtitle { font-size: 11px; }
+    .hero-note { font-size: 10px; }
+    .panel-title { font-size: 20px; }
+    .section-title { font-size: 16px; }
+    .annotation { font-size: 11px; padding: 8px 12px; }
+
+    /* Info bar: stats stack their content vertically, centered */
+    .stat {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+      padding: 12px 6px;
+      font-size: 13px;
+    }
+    .stat-icon { width: 18px; height: 18px; margin-bottom: 2px; }
+    .stat-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      line-height: 1.2;
+    }
+    .stat-label::after { content: none; }
+    .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: #6a7fa8; }
+    .stat-value { font-size: 15px; }
+    .stat-value + .stat-value::before { content: none; }
+    .stat-value + .stat-value { font-size: 13px; color: #9fb4d9; font-weight: 500; }
+    .stat-qualifier { margin-left: 0; font-size: 11px; color: #6a7fa8; }
+
+    /* Tab bar: 3 tabs on top row, 2 on bottom row, each equal width within row */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      padding: 6px;
+    }
+    .tab {
+      padding: 10px 4px;
+      font-size: 11px;
+      letter-spacing: 0.3px;
+    }
+    .tab:nth-child(1) { grid-column: 1 / 3; }
+    .tab:nth-child(2) { grid-column: 3 / 5; }
+    .tab:nth-child(3) { grid-column: 5 / 7; }
+    .tab:nth-child(4) { grid-column: 1 / 4; }
+    .tab:nth-child(5) { grid-column: 4 / 7; }
+
+    /* Challenge grid: single column on mobile */
+    .challenge-grid {
+      grid-template-columns: 1fr;
+    }
+
+    /* Photo grid: 2 columns on mobile */
+    .photo-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .photo-title { font-size: 13px; }
+    .photo-uploader { font-size: 11px; }
+
+    /* Store challenge: already stacks via existing 640px query, but tighten padding */
+    .store-challenge { padding: 16px; }
+    .criterion { padding: 14px; }
+    .criterion-value { font-size: 22px; }
+
+    /* Training grid: 2 columns on mobile */
+    .training-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .training-name { font-size: 12px; padding: 8px 10px; }
+  }
+
+  /* Very narrow screens (small phones) */
+  @media (max-width: 400px) {
+    .photo-grid { grid-template-columns: 1fr; }
+    .training-grid { grid-template-columns: 1fr; }
+    .hero-logo { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ========== HERO / LOGO AREA ========== -->
+  <header class="hero">
+    <div class="hero-logo">INTEL PC CHAMPIONS 2026</div>
+    <div class="hero-subtitle">JUNE 3 – JULY 15, 2026 · PARTNER SHOWCASE</div>
+    <div class="hero-note">Placeholder — final campaign artwork will replace this block</div>
+  </header>
+
+  <!-- ========== PERSISTENT INFO BAR ========== -->
+  <!-- Stays fixed above tabs. Updates in real time as completions/approvals occur. -->
+  <div class="info-bar">
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2l3 7h7l-5.5 4.5L18 22l-6-4-6 4 1.5-8.5L2 9h7z"/>
+      </svg>
+      <div class="stat-text">
+        <span class="stat-label">Trainings</span>
+        <span class="stat-value">8 of 14</span>
+        <span class="stat-qualifier">complete</span>
+      </div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 11l3 3L22 4"/>
+        <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+      </svg>
+      <div class="stat-text">
+        <span class="stat-label">Challenges</span>
+        <span class="stat-value">3 of 7</span>
+        <span class="stat-qualifier">complete</span>
+      </div>
+    </div>
+    <div class="stat">
+      <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 21h18M5 21V7l7-4 7 4v14M9 9h2M13 9h2M9 13h2M13 13h2M9 17h2M13 17h2"/>
+      </svg>
+      <div class="stat-text">
+        <span class="stat-label">Store</span>
+        <span class="stat-value">3/4 reps</span>
+        <span class="stat-value">56/72 trainings</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== TAB NAVIGATION ========== -->
+  <nav class="tabs">
+    <button class="tab" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="trainings">Trainings</button>
+    <button class="tab" data-tab="prizes">Prizes</button>
+    <button class="tab active" data-tab="challenges">Challenges</button>
+    <button class="tab" data-tab="photowall">Photo Wall</button>
+  </nav>
+
+  <!-- ========== OVERVIEW PANEL ========== -->
+  <section class="panel" id="panel-overview">
+    <h2 class="panel-title">Overview</h2>
+    <div class="placeholder-block">
+      Overview tab content — campaign intro copy, dates, eligibility, how to earn entries.<br>
+      Content to be written once featured devices and prizes are confirmed.
+    </div>
+  </section>
+
+  <!-- ========== TRAININGS PANEL ========== -->
+  <section class="panel" id="panel-trainings">
+    <h2 class="panel-title">Trainings</h2>
+    <div class="annotation">
+      <strong>Dev note:</strong> Current week displays first. Previous weeks stack below in reverse chronological order.
+      Completed trainings show a green check overlay on the thumbnail. Each row accommodates up to four cards wide.
+    </div>
+
+    <div class="training-week">
+      <div class="training-week-title current">Week 3 — Current Week</div>
+      <div class="training-grid">
+        <div class="training-card">
+          <div class="training-thumb"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Intel Graphics</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Students that Game</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Norton Products</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="training-week">
+      <div class="training-week-title">Week 2</div>
+      <div class="training-grid">
+        <div class="training-card">
+          <div class="training-thumb complete"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Intel Processor Lineup</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb complete"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Norton Scam Protection</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb complete"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">How to Sell Lenovo #2</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">How to Sell Acer #2</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="training-week">
+      <div class="training-week-title">Week 1</div>
+      <div class="training-grid">
+        <div class="training-card">
+          <div class="training-thumb complete"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Selling Latest PTL Devices</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb complete"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Selling Latest ARLR Devices</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb complete"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">How to Sell Lenovo #1</div>
+        </div>
+        <div class="training-card">
+          <div class="training-thumb complete"><span class="training-thumb-label">Training Thumbnail</span></div>
+          <div class="training-name">Sell up Between Acer Devices</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRIZES PANEL ========== -->
+  <section class="panel" id="panel-prizes">
+    <h2 class="panel-title">Prizes</h2>
+    <div class="placeholder-block">
+      Prize details, pools, drawing structure, fulfillment info.<br>
+      Content to be populated once prize values and quantities are confirmed.
+    </div>
+  </section>
+
+  <!-- ========== CHALLENGES PANEL (ACTIVE BY DEFAULT) ========== -->
+  <section class="panel active" id="panel-challenges">
+    <h2 class="panel-title">Challenges</h2>
+
+    <!-- === Your Challenges Section === -->
+    <h3 class="section-title">Your Challenges</h3>
+    <div class="annotation">
+      <strong>Dev note:</strong> 7 individual challenges. OEM training-pair challenges auto-validate on completion of both trainings.
+      Photo upload challenges require manual review. Challenge check awarded only on Approved status.
+    </div>
+
+    <div class="challenge-grid">
+
+      <!-- Training Pair: In Progress -->
+      <div class="challenge-card">
+        <div class="challenge-header">
+          <div>
+            <div class="challenge-name">Acer Challenge</div>
+            <div class="challenge-type">Training Pair · Auto-Validate</div>
+          </div>
+          <span class="status-badge status-in-progress">In Progress</span>
+        </div>
+        <div class="challenge-desc">Complete both Acer trainings to earn a drawing entry.</div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" style="width: 50%"></div></div>
+          <div class="progress-text">1 of 2</div>
+        </div>
+      </div>
+
+      <!-- Training Pair: Complete -->
+      <div class="challenge-card complete">
+        <div class="challenge-header">
+          <div>
+            <div class="challenge-name">Lenovo Challenge</div>
+            <div class="challenge-type">Training Pair · Auto-Validate</div>
+          </div>
+          <span class="status-badge status-complete">✓ Complete</span>
+        </div>
+        <div class="challenge-desc">Complete both Lenovo trainings to earn a drawing entry.</div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill complete" style="width: 100%"></div></div>
+          <div class="progress-text">2 of 2</div>
+        </div>
+      </div>
+
+      <!-- Training Pair: Not Started -->
+      <div class="challenge-card">
+        <div class="challenge-header">
+          <div>
+            <div class="challenge-name">Norton Challenge</div>
+            <div class="challenge-type">Training Pair · Auto-Validate</div>
+          </div>
+          <span class="status-badge status-not-started">Not Started</span>
+        </div>
+        <div class="challenge-desc">Complete both Norton trainings to earn a drawing entry.</div>
+        <div class="progress-wrap">
+          <div class="progress-bar"><div class="progress-fill" style="width: 0%"></div></div>
+          <div class="progress-text">0 of 2</div>
+        </div>
+      </div>
+
+      <!-- Photo Challenge: Approved -->
+      <div class="challenge-card complete">
+        <div class="challenge-header">
+          <div>
+            <div class="challenge-name">Team Photo</div>
+            <div class="challenge-type">Photo Upload · Manual Review</div>
+          </div>
+          <span class="status-badge status-approved">✓ Approved</span>
+        </div>
+        <div class="challenge-desc">Photo of your Retail and OEM teammates. Approved photo is displayed on the Photo Wall.</div>
+      </div>
+
+      <!-- Photo Challenge: Pending -->
+      <div class="challenge-card pending">
+        <div class="challenge-header">
+          <div>
+            <div class="challenge-name">Lenovo SKU Selfie</div>
+            <div class="challenge-type">Photo Upload · Manual Review</div>
+          </div>
+          <span class="status-badge status-pending">Pending Review</span>
+        </div>
+        <div class="challenge-desc">Selfie with your favorite Lenovo ICU3 SKU to sell. Your submission is being reviewed.</div>
+      </div>
+
+      <!-- Photo Challenge: Denied -->
+      <div class="challenge-card denied">
+        <div class="challenge-header">
+          <div>
+            <div class="challenge-name">Acer SKU Selfie</div>
+            <div class="challenge-type">Photo Upload · Manual Review</div>
+          </div>
+          <span class="status-badge status-denied">Denied</span>
+        </div>
+        <div class="challenge-desc">Selfie with your favorite Acer SKU to sell.</div>
+        <div class="denial-reason">
+          <strong>Reason for denial:</strong>
+          Photo does not clearly show an Acer device. Please retake with the SKU clearly visible.
+        </div>
+        <button class="btn btn-primary btn-full" onclick="openUploadModal('Acer SKU Selfie')">Upload New Photo</button>
+      </div>
+
+      <!-- Photo Challenge: Not Started -->
+      <div class="challenge-card">
+        <div class="challenge-header">
+          <div>
+            <div class="challenge-name">Norton SKU Selfie</div>
+            <div class="challenge-type">Photo Upload · Manual Review</div>
+          </div>
+          <span class="status-badge status-not-started">Not Started</span>
+        </div>
+        <div class="challenge-desc">Selfie with your favorite Norton SKU to sell.</div>
+        <button class="btn btn-primary btn-full" onclick="openUploadModal('Norton SKU Selfie')">Upload Photo</button>
+      </div>
+
+    </div>
+
+    <!-- === Store Challenge Section === -->
+    <h3 class="section-title">Store Challenge</h3>
+    <div class="annotation">
+      <strong>Dev note:</strong> Not a user challenge — this is a store-level raffle eligibility tracker.
+      Both criteria must be met for the store to enter the raffle. Data aggregates all IPC-participating reps at the same store.
+    </div>
+
+    <div class="store-challenge">
+      <div class="store-status-banner">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div><strong>Not yet qualified</strong> — 1 more participant and 16 more trainings needed</div>
+      </div>
+
+      <div class="criteria-grid">
+        <div class="criterion">
+          <div class="criterion-label">Criterion 1 · Participating Reps</div>
+          <div class="criterion-value">3 <span class="criterion-target">/ 4 required</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 75%"></div></div>
+        </div>
+        <div class="criterion">
+          <div class="criterion-label">Criterion 2 · Total Promotional Trainings</div>
+          <div class="criterion-value">56 <span class="criterion-target">/ 72 required</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width: 78%"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ========== PHOTO WALL PANEL ========== -->
+  <section class="panel" id="panel-photowall">
+    <h2 class="panel-title">Photo Wall</h2>
+    <div class="annotation">
+      <strong>Dev note:</strong> Approved photos only. Each card displays photo, user-written caption (optional), uploader name + last initial, and heart reaction.
+      If no caption is provided at upload, the caption line is hidden entirely. No timestamps, no store info, no comments. Filter chips at top filter by challenge type.
+    </div>
+
+    <!-- Filter Chips -->
+    <div class="filter-chips" id="filter-chips">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="team">Team Photos</button>
+      <button class="chip" data-filter="lenovo">Lenovo</button>
+      <button class="chip" data-filter="acer">Acer</button>
+      <button class="chip" data-filter="norton">Norton</button>
+    </div>
+
+    <!-- Photo Grid -->
+    <div class="photo-grid" id="photo-grid">
+      <div class="photo-card" data-type="team">
+        <div class="photo-image team">[Team Photo Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-title">Best Buy #1234 — Full Team</div>
+          <div class="photo-uploader">James C.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="12"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>12</span></button></div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-type="lenovo">
+        <div class="photo-image lenovo">[Lenovo SKU Selfie Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-title">My Favorite Lenovo ThinkPad</div>
+          <div class="photo-uploader">Sarah M.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="8"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>8</span></button></div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-type="acer">
+        <div class="photo-image acer">[Acer SKU Selfie Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-title">Acer Predator Setup</div>
+          <div class="photo-uploader">Marcus R.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="5"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>5</span></button></div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-type="norton">
+        <div class="photo-image norton">[Norton SKU Selfie Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-title">Norton 360 Display</div>
+          <div class="photo-uploader">Priya K.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="4"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>4</span></button></div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-type="team">
+        <div class="photo-image team">[Team Photo Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-title">Season 2 — here we come!</div>
+          <div class="photo-uploader">Dorothy H.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="15"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>15</span></button></div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-type="lenovo">
+        <div class="photo-image lenovo">[Lenovo SKU Selfie Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-title">Lenovo Legion Pro Pick</div>
+          <div class="photo-uploader">Tyler W.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="7"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>7</span></button></div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-type="acer">
+        <div class="photo-image acer">[Acer SKU Selfie Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-uploader">Chris L.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="3"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>3</span></button></div>
+        </div>
+      </div>
+
+      <div class="photo-card" data-type="team">
+        <div class="photo-image team">[Team Photo Placeholder]</div>
+        <div class="photo-body">
+          <div class="photo-title">Best Buy #0485 Team</div>
+          <div class="photo-uploader">Devon S.</div>
+          <div class="photo-actions"><button class="heart-btn" data-count="9"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg><span>9</span></button></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== FOOTER NOTE ========== -->
+  <div class="footer-note">
+    Mockup reference for Trokit development · Interactive preview of user-facing tabs, challenge states, and photo wall
+  </div>
+
+</div>
+
+<!-- ========== UPLOAD MODAL ========== -->
+<div class="modal-overlay" id="upload-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Upload Photo</div>
+      <button class="modal-close" onclick="closeUploadModal()">×</button>
+    </div>
+    <div class="modal-context">
+      Uploading for: <strong id="modal-challenge-name">Team Photo Challenge</strong>
+    </div>
+    <div class="drop-zone">
+      <div class="drop-zone-main">Drag and drop files here</div>
+      <div class="drop-zone-or">or</div>
+      <button class="btn btn-secondary">Browse Files</button>
+    </div>
+    <div class="caption-field">
+      <label class="caption-label" for="caption-input">Add a caption <span class="caption-optional">(optional)</span></label>
+      <input type="text" class="caption-input" id="caption-input" maxlength="100" placeholder="e.g., Best Buy 1234 — Full Team">
+      <div class="caption-hint"><span>Displayed with your photo on the Photo Wall</span><span id="caption-count">0 / 100</span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeUploadModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="closeUploadModal()">Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + target).classList.add('active');
+    });
+  });
+
+  // Upload modal
+  function openUploadModal(challengeName) {
+    document.getElementById('modal-challenge-name').textContent = challengeName;
+    document.getElementById('upload-modal').classList.add('active');
+  }
+  function closeUploadModal() {
+    document.getElementById('upload-modal').classList.remove('active');
+  }
+  document.getElementById('upload-modal').addEventListener('click', (e) => {
+    if (e.target.id === 'upload-modal') closeUploadModal();
+  });
+
+  // Photo wall filter chips
+  document.querySelectorAll('#filter-chips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#filter-chips .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const filter = chip.dataset.filter;
+      document.querySelectorAll('#photo-grid .photo-card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.type === filter) ? '' : 'none';
+      });
+    });
+  });
+
+  // Heart reactions
+  document.querySelectorAll('.heart-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const countSpan = btn.querySelector('span');
+      let count = parseInt(btn.dataset.count);
+      if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+        count--;
+      } else {
+        btn.classList.add('active');
+        count++;
+      }
+      btn.dataset.count = count;
+      countSpan.textContent = count;
+    });
+  });
+
+  // Caption character counter
+  const captionInput = document.getElementById('caption-input');
+  const captionCount = document.getElementById('caption-count');
+  if (captionInput && captionCount) {
+    captionInput.addEventListener('input', () => {
+      captionCount.textContent = captionInput.value.length + ' / 100';
+    });
+  }
+</script>
+
+</body>
+</html>
