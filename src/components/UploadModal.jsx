@@ -1,10 +1,20 @@
 import { useState } from 'react';
 import { Icon } from './Icon.jsx';
 
-export function UploadModal({ challengeName, onClose }) {
+export function UploadModal({ challengeName, onClose, onSubmit }) {
   const [caption, setCaption] = useState('');
 
   if (!challengeName) return null;
+
+  const handleSubmit = () => {
+    const payload = {
+      challengeName,
+      caption: caption.trim()
+    };
+    onSubmit?.(payload);
+    setCaption('');
+    onClose();
+  };
 
   return (
     <div className="modal-overlay active" onClick={onClose}>
@@ -48,7 +58,7 @@ export function UploadModal({ challengeName, onClose }) {
 
         <div className="modal-actions">
           <button className="btn btn-secondary" type="button" onClick={onClose}>Cancel</button>
-          <button className="btn btn-primary" type="button" onClick={onClose}>Submit</button>
+          <button className="btn btn-primary" type="button" onClick={handleSubmit}>Submit</button>
         </div>
       </div>
     </div>

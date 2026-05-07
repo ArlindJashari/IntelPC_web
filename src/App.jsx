@@ -8,6 +8,7 @@ import { PrizesPanel } from './components/PrizesPanel.jsx';
 import { ChallengesPanel } from './components/ChallengesPanel.jsx';
 import { PhotoWallPanel } from './components/PhotoWallPanel.jsx';
 import { UploadModal } from './components/UploadModal.jsx';
+import { PushNotifications } from './components/PushNotifications.jsx';
 import ShapeGrid from './components/ShapeGrid.jsx';
 import { tabs } from './data/campaignData.js';
 
@@ -38,6 +39,7 @@ function ActivePanel({ activeTab, onUpload }) {
 export default function App() {
   const [activeTab, setActiveTab] = useState(getTabFromHash);
   const [uploadChallenge, setUploadChallenge] = useState(null);
+  const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     const syncFromHash = () => {
@@ -58,6 +60,24 @@ export default function App() {
     if (window.location.hash !== `#${tabId}`) {
       window.location.hash = tabId;
     }
+  };
+
+  const dismissNotification = (id) => {
+    setNotifications((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const handleUploadSubmit = ({ challengeName, caption }) => {
+    const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    const title = 'Submission Received';
+    const message = caption
+      ? `${challengeName} uploaded. Caption: "${caption}".`
+      : `${challengeName} uploaded and sent for review.`;
+
+    setNotifications((prev) => [...prev, { id, title, message, tone: 'success' }]);
+
+    window.setTimeout(() => {
+      dismissNotification(id);
+    }, 4200);
   };
 
   return (
@@ -86,7 +106,12 @@ export default function App() {
         <ActivePanel activeTab={activeTab} onUpload={setUploadChallenge} />
       </main>
 
-      <UploadModal challengeName={uploadChallenge} onClose={() => setUploadChallenge(null)} />
+      <UploadModal
+        challengeName={uploadChallenge}
+        onClose={() => setUploadChallenge(null)}
+        onSubmit={handleUploadSubmit}
+      />
+      <PushNotifications notifications={notifications} onDismiss={dismissNotification} />
     </div>
   );
 }
