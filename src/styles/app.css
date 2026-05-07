@@ -152,6 +152,96 @@ svg {
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
 }
 
+.hero-menu-toggle {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 6;
+  min-height: 38px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(5, 10, 28, 0.72);
+  color: #e8ecf6;
+  padding: 0 10px;
+  font: 800 10px/1 var(--font-sf-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-menu-toggle.open {
+  box-shadow: inset 0 -2px 0 var(--color-urgency-red);
+}
+
+.hero-mobile-tabs {
+  display: grid;
+  gap: 8px;
+}
+
+.hero-menu-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(2, 4, 12, 0.74);
+  padding: 16px;
+  pointer-events: none;
+}
+
+.hero-menu-overlay.open {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.hero-menu-modal {
+  width: min(620px, 100%);
+  max-height: min(86vh, 760px);
+  overflow: auto;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(6, 10, 27, 0.98);
+  padding: 10px;
+}
+
+.hero-menu-modal-head {
+  min-height: 42px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #e8ecf6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font: 800 11px/1 var(--font-sf-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hero-menu-close {
+  min-width: 32px;
+  min-height: 32px;
+  border: 1px solid rgba(255,255,255,0.24);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.hero-mobile-tab {
+  min-height: 58px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: transparent;
+  overflow: hidden;
+}
+
+.hero-mobile-tab.active {
+  border: 2px solid transparent;
+  border-image: var(--gradient-plasma) 1;
+  box-shadow: inset 0 -3px 0 var(--color-urgency-red);
+}
+
 .hero-copy {
   text-align: center;
   display: grid;
@@ -330,6 +420,11 @@ svg {
   background: rgba(255,255,255,0.24);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
   padding: 6px;
+}
+
+.hero-menu-toggle,
+.hero-menu-overlay {
+  display: none;
 }
 
 .tab {
@@ -1319,23 +1414,38 @@ svg {
   }
 
   .tabs {
-    grid-template-columns: repeat(6, 1fr);
-    gap: 6px;
-    padding: 6px;
-    background: rgba(255,255,255,0.22);
+    display: none;
   }
 
-  .tab {
-    min-height: 46px;
-    border: 1px solid rgba(0,0,0,0.12);
+  .hero-menu-toggle {
+    display: flex;
+  }
+
+  .hero-menu-overlay {
     padding: 0;
+    background: rgba(2, 4, 12, 0.92);
   }
 
-  .tab:nth-child(1) { grid-column: 1 / 3; }
-  .tab:nth-child(2) { grid-column: 3 / 5; }
-  .tab:nth-child(3) { grid-column: 5 / 7; }
-  .tab:nth-child(4) { grid-column: 1 / 4; }
-  .tab:nth-child(5) { grid-column: 4 / 7; }
+  .hero-menu-modal {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    border: 0;
+    padding: 14px;
+    background: rgba(4, 8, 22, 0.98);
+  }
+
+  .hero-menu-modal-head {
+    margin-bottom: 12px;
+  }
+
+  .hero-mobile-tabs {
+    gap: 10px;
+  }
+
+  .hero-mobile-tab {
+    min-height: 64px;
+  }
 
   .store-status-banner {
     padding-right: 24px;
@@ -1358,12 +1468,66 @@ svg {
 }
 
 @media (max-width: 560px) {
+  .hero-panel {
+    min-height: 420px;
+    padding: 88px 18px 92px;
+    place-items: center;
+  }
+
+  .hero-logo {
+    left: 50%;
+    top: 14px;
+    transform: translateX(-50%);
+    width: clamp(120px, 40vw, 150px);
+  }
+
+  .hero-menu-toggle {
+    top: 12px;
+    right: 12px;
+    min-height: 34px;
+    padding: 0 8px;
+    font-size: 9px;
+  }
+
+  .hero-menu-overlay {
+    padding: 0;
+  }
+
+  .hero-menu-modal {
+    padding: 10px;
+  }
+
+  .hero-mobile-tabs {
+    gap: 6px;
+  }
+
+  .hero-mobile-tab {
+    min-height: 56px;
+  }
+
+  .hero-copy {
+    width: 100%;
+    align-content: center;
+    text-align: center;
+  }
+
   .hero-copy h1 {
     font-size: 33px;
+    text-align: center;
   }
 
   .hero-copy p {
     font-size: 14px;
+    text-align: center;
+  }
+
+  .hero-status {
+    left: 50%;
+    bottom: 14px;
+    transform: translateX(-50%);
+    justify-items: center;
+    text-align: center;
+    width: min(92%, 280px);
   }
 
   .challenge-grid,

@@ -50,7 +50,7 @@ export default function App() {
         <span className="page-screw screw-three" />
         <span className="page-screw screw-four" />
 
-        <Hero />
+        <Hero activeTab={activeTab} setActiveTab={setActiveTab} />
         <InfoBar />
         <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
         <ActivePanel activeTab={activeTab} onUpload={setUploadChallenge} />
