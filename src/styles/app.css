@@ -626,21 +626,6 @@ svg {
   overflow: hidden;
 }
 
-.challenge-thumb-wrap {
-  width: 100%;
-  height: 110px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: #080d17;
-  overflow: hidden;
-}
-
-.challenge-thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
 .challenge-card::before,
 .challenge-card::after,
 .photo-card::before,
@@ -1085,6 +1070,13 @@ svg {
   font: 800 10px/1 var(--font-sf-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+
+.training-thumb-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .training-thumb.complete::after {

@@ -4,32 +4,10 @@ import { BrandMark } from './BrandMark.jsx';
 import { StatusBadge } from './StatusBadge.jsx';
 import { ProgressBar } from './ProgressBar.jsx';
 import { Icon } from './Icon.jsx';
-import challengeThumb1 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_35 PM (1).png';
-import challengeThumb2 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_36 PM (2).png';
-import challengeThumb3 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_36 PM (3).png';
-import challengeThumb4 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_36 PM (4).png';
-import challengeThumb5 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_39 PM (5).png';
-import challengeThumb6 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_39 PM (6).png';
-import challengeThumb7 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_40 PM (7).png';
 
-const CHALLENGE_THUMBS = [
-  challengeThumb1,
-  challengeThumb2,
-  challengeThumb3,
-  challengeThumb4,
-  challengeThumb5,
-  challengeThumb6,
-  challengeThumb7
-];
-
-function ChallengeCard({ challenge, onUpload, thumbnail }) {
+function ChallengeCard({ challenge, onUpload }) {
   return (
     <article className={`challenge-card challenge-${challenge.statusTone}`}>
-      {thumbnail && (
-        <div className="challenge-thumb-wrap">
-          <img className="challenge-thumb" src={thumbnail} alt="" aria-hidden="true" />
-        </div>
-      )}
       <div className="challenge-header">
         <div className="challenge-identity">
           <BrandMark brand={challenge.brand} />
@@ -107,13 +85,8 @@ export function ChallengesPanel({ onUpload }) {
       </Annotation>
 
       <div className="challenge-grid">
-        {challenges.map((challenge, index) => (
-          <ChallengeCard
-            key={challenge.id}
-            challenge={challenge}
-            onUpload={onUpload}
-            thumbnail={CHALLENGE_THUMBS[index]}
-          />
+        {challenges.map((challenge) => (
+          <ChallengeCard key={challenge.id} challenge={challenge} onUpload={onUpload} />
         ))}
       </div>
 
