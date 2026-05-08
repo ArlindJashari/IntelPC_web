@@ -38,6 +38,26 @@ export function Icon({ name, className = '' }) {
         <path d="M18 6L6 18" />
         <path d="M6 6l12 12" />
       </>
+    ),
+    calendar: (
+      <>
+        <rect x="3" y="5" width="18" height="16" rx="2" />
+        <path d="M16 3v4M8 3v4M3 10h18" />
+      </>
+    ),
+    trophy: (
+      <>
+        <path d="M8 4h8v3a4 4 0 01-8 0V4z" />
+        <path d="M6 6H4a2 2 0 000 4h2M18 6h2a2 2 0 010 4h-2" />
+        <path d="M12 11v4M9 20h6M10 15h4" />
+      </>
+    ),
+    link: (
+      <>
+        <path d="M10 14l4-4" />
+        <path d="M7 17a3 3 0 010-4l2-2a3 3 0 014 4l-1 1" />
+        <path d="M17 7a3 3 0 010 4l-2 2a3 3 0 01-4-4l1-1" />
+      </>
     )
   };
 
