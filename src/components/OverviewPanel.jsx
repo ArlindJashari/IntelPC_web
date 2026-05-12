@@ -1,4 +1,5 @@
 import { Icon } from './Icon.jsx';
+import { Annotation } from './Annotation.jsx';
 
 export function OverviewPanel() {
   const weeklyDeadlines = [
@@ -14,15 +15,14 @@ export function OverviewPanel() {
     <section className="panel-body">
       <h2 className="panel-title">Overview</h2>
 
-      <section className="content-block">
-        <p className="content-lead">
+      <Annotation aria-label="Campaign summary">
+        <p>
+          <strong>How this promotion works</strong>{' '}
           You&apos;ve set out on an expedition into uncharted territory, where Rewards lie hidden.
           Use your knowledge to chart your path forward.
         </p>
-        <p className="content-copy">
-          Over six weeks, take trainings, complete challenges, and earn drawing entries.
-        </p>
-      </section>
+        <p>Over six weeks, take trainings, complete challenges, and earn drawing entries.</p>
+      </Annotation>
 
       <h3 className="section-title">How to Earn Entries</h3>
       <section className="content-grid">
@@ -67,12 +67,12 @@ export function OverviewPanel() {
         ))}
       </section>
 
-      <section className="content-block">
-        <p className="content-copy">
+      <Annotation aria-label="Weekly drawing timing">
+        <p>
           You must complete all trainings within the week they are posted to the promotion
           Trainings page to be entered into that week&apos;s Weekly Drawing.
         </p>
-      </section>
+      </Annotation>
 
       <h3 className="section-title">Grand Prize Drawings</h3>
       <section className="content-grid">

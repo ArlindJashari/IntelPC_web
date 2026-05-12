@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import { filters, photoWallItems } from '../data/campaignData.js';
-import { Annotation } from './Annotation.jsx';
 import { Icon } from './Icon.jsx';
 import photo007 from '../../assets_tab/photos/image-007-C322igWj.jpg';
 import photo008 from '../../assets_tab/photos/image-008-y6Ww2tcC.jpg';
@@ -61,10 +60,6 @@ export function PhotoWallPanel() {
   return (
     <section className="panel-body">
       <h2 className="panel-title">Photo Wall</h2>
-      <Annotation>
-        <strong>Dev note:</strong> Approved photos only. Each card displays photo, user-written caption optional, uploader name + last initial, and heart reaction.
-        If no caption is provided at upload, the caption line is hidden entirely. No timestamps, no store info, no comments. Filter chips at top filter by challenge type.
-      </Annotation>
 
       <div className="filter-chips">
         {filters.map((filter) => (

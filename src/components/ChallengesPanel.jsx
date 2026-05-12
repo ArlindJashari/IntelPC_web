@@ -1,5 +1,4 @@
 import { challenges, storeChallenge } from '../data/campaignData.js';
-import { Annotation } from './Annotation.jsx';
 import { BrandMark } from './BrandMark.jsx';
 import { StatusBadge } from './StatusBadge.jsx';
 import { ProgressBar } from './ProgressBar.jsx';
@@ -79,10 +78,6 @@ export function ChallengesPanel({ onUpload }) {
       <h2 className="panel-title">Challenges</h2>
 
       <h3 className="section-title">Your Challenges</h3>
-      <Annotation>
-        <strong>Dev note:</strong> 7 individual challenges. OEM training-pair challenges auto-validate on completion of both trainings.
-        Photo upload challenges require manual review. Challenge check awarded only on Approved status.
-      </Annotation>
 
       <div className="challenge-grid">
         {challenges.map((challenge) => (
@@ -91,10 +86,6 @@ export function ChallengesPanel({ onUpload }) {
       </div>
 
       <h3 className="section-title">Store Challenge</h3>
-      <Annotation>
-        <strong>Dev note:</strong> Not a user challenge — this is a store-level raffle eligibility tracker.
-        Both criteria must be met for the store to enter the raffle. Data aggregates all IPC-participating reps at the same store.
-      </Annotation>
 
       <StoreChallenge />
     </section>

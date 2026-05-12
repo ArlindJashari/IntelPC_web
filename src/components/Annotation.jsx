@@ -1,3 +1,7 @@
-export function Annotation({ children }) {
-  return <div className="annotation">{children}</div>;
+export function Annotation({ children, ...rest }) {
+  return (
+    <div className="annotation" {...rest}>
+      {children}
+    </div>
+  );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Hero } from './components/Hero.jsx';
+import { MobileSectionSwitcher } from './components/MobileSectionSwitcher.jsx';
 import { InfoBar } from './components/InfoBar.jsx';
 import { Tabs } from './components/Tabs.jsx';
 import { OverviewPanel } from './components/OverviewPanel.jsx';
@@ -100,7 +101,8 @@ export default function App() {
         <span className="page-screw screw-three" />
         <span className="page-screw screw-four" />
 
-        <Hero activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
+        <Hero />
+        <MobileSectionSwitcher activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
         <InfoBar />
         <Tabs activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
         <ActivePanel activeTab={activeTab} onUpload={setUploadChallenge} />

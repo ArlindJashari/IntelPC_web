@@ -1,15 +1,16 @@
 import { Icon } from './Icon.jsx';
+import { Annotation } from './Annotation.jsx';
 
 export function PrizesPanel() {
   return (
     <section className="panel-body">
       <h2 className="panel-title">Prizes</h2>
 
-      <section className="content-block">
-        <p className="content-lead">
+      <Annotation aria-label="Prizes introduction">
+        <p>
           Tons of rewards are up for grabs on your journey to become an Intel PC Champion.
         </p>
-      </section>
+      </Annotation>
 
       <h3 className="section-title">Weekly Drawings</h3>
       <section className="content-card">

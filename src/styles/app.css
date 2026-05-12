@@ -52,10 +52,10 @@ svg {
   min-height: calc(100vh - 48px);
   padding: 22px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: var(--color-control-panel-grey);
   border: 2px solid rgba(255,255,255,0.78);
-  border-radius: 10px;
+  border-radius: var(--radius-box);
   z-index: 1;
   box-shadow:
     0 22px 70px rgba(0,0,0,0.45),
@@ -95,13 +95,13 @@ svg {
 
 /* ---------- Hero follows IPC_2026_Mockup organization ---------- */
 .hero-panel {
-  min-height: 320px;
-  margin-bottom: 16px;
+  min-height: clamp(320px, 42vw, 480px);
+  margin-bottom: clamp(40px, 6.5vh, 96px);
   border: 1px solid rgba(0,0,0,0.82);
   background: #04081b;
   color: var(--color-digital-white);
   box-shadow: inset 0 0 0 4px rgba(0,0,0,0.82), inset 0 0 0 5px rgba(255,255,255,0.18);
-  border-radius: 8px;
+  border-radius: var(--radius-box);
   padding: 46px 44px;
   display: grid;
   grid-template-columns: 1fr;
@@ -109,16 +109,19 @@ svg {
   align-items: center;
   justify-items: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  z-index: 8;
 }
 
 .hero-plasma-layer {
   position: absolute;
-  inset: -14% -10%;
+  inset: 0;
   z-index: 0;
-  opacity: 0.96;
-  transform: translateX(-6%) scale(1.12);
-  transform-origin: center;
+  opacity: 0.98;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  overflow: hidden;
 }
 
 .hero-vignette {
@@ -126,6 +129,8 @@ svg {
   inset: 0;
   pointer-events: none;
   z-index: 1;
+  border-radius: inherit;
+  overflow: hidden;
   background:
     linear-gradient(rgba(3, 7, 24, 0.5), rgba(3, 7, 24, 0.5)),
     radial-gradient(circle at 80% 22%, rgba(255,255,255,0.1), transparent 36%);
@@ -135,30 +140,42 @@ svg {
   display: none;
 }
 
-.hero-copy,
-.hero-status {
-  position: relative;
+.hero-logo-stage {
+  position: absolute;
+  inset: 0;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  pointer-events: none;
+  overflow: visible;
+  /* Nudge down so scaled logo bleeds past bottom of dark hero like the top */
+  transform: translateY(clamp(18px, 2.6vh, 32px));
 }
 
 .hero-logo {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  z-index: 3;
-  width: clamp(118px, 11vw, 165px);
+  display: block;
+  width: min(82vw, 780px);
   height: auto;
+  max-width: none;
   object-fit: contain;
-  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.45));
+  object-position: center;
+  /* max-width + height fight intrinsic sizing; scale paints past the dark hero reliably */
+  transform: scale(1.56);
+  transform-origin: center center;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.5));
+}
+
+/* Mobile-only strip; full-width layout in max-width:900px media block */
+.mobile-section-switcher {
+  display: none;
 }
 
 .hero-menu-toggle {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 6;
   min-height: 38px;
   border: 1px solid rgba(255,255,255,0.18);
+  border-radius: calc(var(--radius-box) * 0.6);
   background: rgba(5, 10, 28, 0.72);
   color: #e8ecf6;
   padding: 0 10px;
@@ -200,6 +217,7 @@ svg {
   max-height: min(86vh, 760px);
   overflow: auto;
   border: 1px solid rgba(255,255,255,0.2);
+  border-radius: var(--radius-box);
   background: rgba(6, 10, 27, 0.98);
   padding: 10px;
 }
@@ -208,6 +226,7 @@ svg {
   min-height: 42px;
   margin-bottom: 10px;
   border: 1px solid rgba(255,255,255,0.2);
+  border-radius: calc(var(--radius-box) * 0.6);
   color: #e8ecf6;
   display: flex;
   align-items: center;
@@ -222,6 +241,7 @@ svg {
   min-width: 32px;
   min-height: 32px;
   border: 1px solid rgba(255,255,255,0.24);
+  border-radius: calc(var(--radius-box) * 0.6);
   background: rgba(255,255,255,0.06);
   color: #fff;
   font-size: 22px;
@@ -229,83 +249,45 @@ svg {
 }
 
 .hero-mobile-tab {
-  min-height: 58px;
+  min-height: 0;
   padding: 0;
-  border: 1px solid rgba(255,255,255,0.16);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
   background: transparent;
-  overflow: hidden;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.hero-mobile-tab.active {
+.hero-mobile-tab-surface {
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: calc(var(--radius-box) * 0.6);
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.hero-mobile-tab .tab-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: clamp(48px, 12vh, 80px);
+  margin: 0;
+  object-fit: contain;
+  object-position: center center;
+  opacity: 0.92;
+}
+
+.hero-mobile-tab.active .hero-mobile-tab-surface {
   border: 2px solid transparent;
   border-image: var(--gradient-plasma) 1;
   box-shadow: inset 0 -3px 0 var(--color-urgency-red);
-}
-
-.hero-copy {
-  text-align: center;
-  display: grid;
-  justify-items: center;
-}
-
-.eyebrow {
-  margin-bottom: 16px;
-  color: rgba(220,226,239,0.86);
-  font: 700 10px/1 var(--font-sf-mono);
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.hero-copy h1 {
-  margin: 0;
-  max-width: 680px;
-  font-size: clamp(38px, 5.2vw, 64px);
-  line-height: 0.95;
-  letter-spacing: -0.07em;
-}
-
-.hero-copy p {
-  margin: 16px 0 0;
-  max-width: 760px;
-  color: rgba(223,228,239,0.9);
-  font-size: 16px;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
-}
-
-.hero-note {
-  display: inline-flex;
-  margin-top: 20px;
-  color: #dde4f2;
-  background: rgba(6, 8, 24, 0.5);
-  border: 1px solid rgba(255,255,255,0.2);
-  padding: 8px 12px;
-  font: 500 11px/1 var(--font-sf-mono);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.hero-status {
-  position: absolute;
-  top: 28px;
-  right: 28px;
-  display: grid;
-  justify-items: end;
-  gap: 5px;
-  padding: 10px 12px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(4, 6, 18, 0.38);
-  text-align: right;
-  color: #dbe2f0;
-  font: 500 10px/1 var(--font-sf-mono);
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-}
-
-.hero-status strong {
-  color: var(--color-urgency-red);
-  letter-spacing: 0.15em;
-  font-size: 15px;
 }
 
 /* ---------- Persistent info bar ---------- */
@@ -315,6 +297,7 @@ svg {
   margin-bottom: 16px;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,0.16);
+  border-radius: var(--radius-box);
   background: rgba(255,255,255,0.22);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
 }
@@ -414,22 +397,18 @@ svg {
 .tabs {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
+  gap: 12px;
   margin-bottom: 28px;
-  border: 1px solid rgba(0,0,0,0.16);
-  background: rgba(255,255,255,0.24);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
-  padding: 6px;
-}
-
-.hero-menu-toggle,
-.hero-menu-overlay {
-  display: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .tab {
   min-height: 58px;
-  border: 0;
+  border: 2px solid rgba(255, 255, 255, 0.88);
+  border-radius: 0;
   padding: 0;
   background: transparent;
   color: #11161c;
@@ -438,13 +417,10 @@ svg {
   font: 900 11px/1 var(--font-sf-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  transition: background 180ms ease, color 180ms ease;
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
   overflow: hidden;
   position: relative;
-}
-
-.tab:last-child {
-  border-right: 0;
+  border-image: none;
 }
 
 .tab-image {
@@ -539,10 +515,44 @@ svg {
   letter-spacing: -0.18em;
 }
 
+.placeholder-block {
+  min-height: 220px;
+  padding: 24px 28px;
+  display: grid;
+  align-content: center;
+  text-align: left;
+  background: #f2f2f2;
+  border: 1px solid #d1d5db;
+  border-radius: var(--radius-box);
+  color: #0b0b0b;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+}
+
+.placeholder-block h3 {
+  margin: 0;
+  max-width: 720px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.025em;
+  color: #0b0b0b;
+}
+
+.placeholder-block p {
+  margin: 12px 0 0;
+  max-width: 720px;
+  color: #3d4450;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* Dev-note style (matches removed Annotation component) */
 .annotation {
   margin: 0 0 26px;
   padding: 13px 16px;
-  background: rgba(17,22,28,0.06);
+  background: rgba(17, 22, 28, 0.06);
+  border: 0;
+  border-radius: 0;
   border-left: 4px solid var(--color-urgency-red);
   color: var(--color-slate-blue);
   font-size: 12.5px;
@@ -556,47 +566,12 @@ svg {
   letter-spacing: 0.08em;
 }
 
-.placeholder-block {
-  min-height: 220px;
-  padding: 34px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 34px 34px,
-    linear-gradient(180deg, rgba(255,255,255,0.045) 1px, transparent 1px) 0 0 / 34px 34px,
-    var(--color-display-black);
-  border: 1px solid rgba(0,0,0,0.92);
-  color: white;
-  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.06);
+.annotation p {
+  margin: 0 0 10px;
 }
 
-.placeholder-block h3 {
-  margin: 0;
-  max-width: 620px;
-  font-size: 22px;
-  line-height: 1.16;
-  letter-spacing: -0.035em;
-}
-
-.placeholder-block p {
-  margin: 12px 0 0;
-  color: #aeb4be;
-}
-
-.content-block {
-  margin-bottom: 24px;
-  padding: 18px 20px;
-  border: 1px solid rgba(0,0,0,0.16);
-  background: rgba(255,255,255,0.36);
-}
-
-.content-lead {
-  margin: 0;
-  color: #11161c;
-  font-size: 20px;
-  line-height: 1.25;
-  letter-spacing: -0.025em;
+.annotation p:last-child {
+  margin-bottom: 0;
 }
 
 .content-copy {
@@ -619,6 +594,7 @@ svg {
   background: #10161c;
   color: white;
   border: 1px solid rgba(0,0,0,0.9);
+  border-radius: var(--radius-box);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,0.06);
 }
 
@@ -639,14 +615,14 @@ svg {
 .content-heading-icon {
   width: 16px;
   height: 16px;
-  color: var(--color-urgency-red);
+  color: var(--color-plasma-geode);
   flex: 0 0 auto;
 }
 
 .content-card p {
   margin: 0 0 10px;
   color: #c8cfdb;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -658,7 +634,7 @@ svg {
   margin: 8px 0 0;
   padding-left: 18px;
   color: #e6ebf4;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.45;
 }
 
@@ -675,6 +651,7 @@ svg {
 .timeline-row {
   padding: 14px 16px;
   border: 1px solid rgba(0,0,0,0.18);
+  border-radius: var(--radius-box);
   background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(229,231,235,0.9));
 }
 
@@ -692,13 +669,13 @@ svg {
 .timeline-icon {
   width: 14px;
   height: 14px;
-  color: var(--color-urgency-red);
+  color: var(--color-plasma-geode);
 }
 
 .timeline-row p {
   margin: 0;
   color: #2d3442;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
@@ -723,7 +700,11 @@ svg {
 .panel-link-icon {
   width: 14px;
   height: 14px;
-  color: var(--color-urgency-red);
+  color: var(--color-plasma-geode);
+}
+
+.panel-link:hover .panel-link-icon {
+  color: #8b1ed4;
 }
 
 .panel-link:hover {
@@ -761,7 +742,9 @@ svg {
   background: #10161c;
   color: white;
   border: 1px solid rgba(0,0,0,0.92);
+  border-radius: var(--radius-box);
   box-shadow: inset 0 0 0 2px rgba(255,255,255,0.065), 0 10px 22px rgba(0,0,0,0.12);
+  overflow: hidden;
 }
 
 .challenge-card {
@@ -820,6 +803,7 @@ svg {
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(255,255,255,0.16);
+  border-radius: calc(var(--radius-box) * 0.6);
   color: white;
   font: 900 18px/1 var(--font-proxima-nova);
   letter-spacing: -0.075em;
@@ -827,25 +811,37 @@ svg {
   flex: 0 0 auto;
 }
 
-.brand-chip-lenovo {
-  background: white;
-  color: #10161c;
-  border-color: white;
-  font-size: 14px;
-  letter-spacing: -0.04em;
+.brand-chip-logo {
+  padding: 6px 12px;
+  min-width: 88px;
+  min-height: 36px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: calc(var(--radius-box) * 0.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+  font: inherit;
+  letter-spacing: 0;
   text-transform: none;
 }
 
-.brand-chip-norton {
-  border: 0;
-  font-size: 15px;
-  letter-spacing: -0.04em;
+.brand-chip-img {
+  display: block;
+  height: 24px;
+  width: auto;
+  max-width: 122px;
+  object-fit: contain;
 }
 
 .brand-chip-icon {
-  min-width: 34px;
-  border: 0;
-  font-size: 24px;
+  min-width: 41px;
+  min-height: 36px;
+  padding: 0 10px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: calc(var(--radius-box) * 0.6);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.65);
+  color: #11161c;
+  font-size: 22px;
   letter-spacing: 0;
 }
 
@@ -911,7 +907,7 @@ svg {
 .challenge-desc {
   margin: 0;
   color: #b6bdc8;
-  font-size: 12.5px;
+  font-size: 14px;
   line-height: 1.42;
   min-height: 52px;
 }
@@ -933,6 +929,7 @@ svg {
   height: 9px;
   width: 100%;
   border: 1px solid rgba(255,255,255,0.24);
+  border-radius: 999px;
   background: rgba(255,255,255,0.055);
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.66);
   overflow: hidden;
@@ -1004,6 +1001,7 @@ svg {
   padding: 10px 12px;
   background: rgba(30,30,255,0.08);
   border-left: 3px solid var(--color-urgency-red);
+  border-radius: calc(var(--radius-box) * 0.6);
   color: #c7ccff;
   font-size: 12px;
   line-height: 1.4;
@@ -1076,6 +1074,7 @@ svg {
   gap: 14px;
   background: #0e141a;
   border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-box);
   position: relative;
   overflow: hidden;
 }
@@ -1174,7 +1173,7 @@ svg {
 .criterion p {
   margin: 14px 0 0;
   color: #b6bdc8;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.42;
 }
 
@@ -1185,11 +1184,11 @@ svg {
 }
 
 .training-week-title {
-  margin: 0 0 14px;
-  padding-bottom: 10px;
+  margin: 0 0 16px;
+  padding-bottom: 12px;
   border-bottom: 1px solid rgba(0,0,0,0.14);
   color: #11161c;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
 }
 
@@ -1199,8 +1198,8 @@ svg {
 
 .training-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
 }
 
 .training-card {
@@ -1208,13 +1207,19 @@ svg {
 }
 
 .training-thumb {
-  aspect-ratio: 16/9;
+  aspect-ratio: 16 / 9;
+  min-height: 148px;
   display: grid;
   place-items: center;
   position: relative;
-  background: var(--gradient-night);
-  color: rgba(255,255,255,0.36);
-  font: 800 10px/1 var(--font-sf-mono);
+  background: #0a0f16;
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: none;
+  overflow: hidden;
+  border-radius: var(--radius-box) var(--radius-box) 0 0;
+  color: #6b7280;
+  font: 800 11px/1 var(--font-sf-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -1223,33 +1228,36 @@ svg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
+  transform: scale(1.07);
+  transform-origin: center center;
 }
 
 .training-thumb.complete::after {
   content: '✓';
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 999px;
   display: grid;
   place-items: center;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 12px;
+  right: 12px;
   background: #40c878;
   color: white;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 900;
   box-shadow: 0 0 12px rgba(64,200,120,0.32);
   border: 1px solid rgba(0,0,0,0.35);
 }
 
 .training-name {
-  padding: 11px 12px;
+  padding: 14px 16px;
   color: white;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
 /* ---------- Photo Wall ---------- */
@@ -1281,8 +1289,8 @@ svg {
 
 .photo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
 }
 
 .photo-card {
@@ -1390,6 +1398,7 @@ svg {
   background: #0b1020;
   color: white;
   border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius-box);
   box-shadow: 0 28px 80px rgba(0,0,0,0.48), inset 0 0 0 3px #000;
 }
 
@@ -1423,6 +1432,7 @@ svg {
   color: white;
   background: transparent;
   border: 1px solid rgba(255,255,255,0.16);
+  border-radius: calc(var(--radius-box) * 0.6);
 }
 
 .modal-close svg {
@@ -1435,6 +1445,7 @@ svg {
   margin-bottom: 18px;
   color: #aeb4be;
   border-left: 3px solid var(--color-urgency-red);
+  border-radius: calc(var(--radius-box) * 0.6);
   background: rgba(30,30,255,0.08);
   font-size: 13px;
 }
@@ -1452,6 +1463,7 @@ svg {
   gap: 9px;
   text-align: center;
   border: 1px dashed rgba(255,255,255,0.32);
+  border-radius: var(--radius-box);
   background: rgba(0,0,0,0.1);
 }
 
@@ -1490,6 +1502,7 @@ svg {
   color: white;
   background: rgba(0,0,0,0.24);
   border: 1px solid rgba(255,255,255,0.2);
+  border-radius: calc(var(--radius-box) * 0.6);
   outline: 0;
   font-family: var(--font-proxima-nova);
   font-size: 13px;
@@ -1520,6 +1533,7 @@ svg {
   color: var(--color-slate-blue);
   background: rgba(255,255,255,0.22);
   border: 1px solid rgba(0,0,0,0.14);
+  border-radius: var(--radius-box);
   text-align: center;
   font: 700 11px/1.45 var(--font-sf-mono);
   letter-spacing: 0.04em;
@@ -1540,6 +1554,8 @@ svg {
   min-height: 72px;
   padding: 12px 12px 12px 14px;
   border: 1px solid rgba(255,255,255,0.22);
+  border-radius: var(--radius-box);
+  overflow: hidden;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
     #0a1022;
@@ -1585,6 +1601,7 @@ svg {
   width: 28px;
   height: 28px;
   border: 1px solid rgba(255,255,255,0.22);
+  border-radius: calc(var(--radius-box) * 0.6);
   background: rgba(255,255,255,0.06);
   color: #e3e8f0;
   font-size: 18px;
@@ -1608,30 +1625,23 @@ svg {
 
   .page-chassis {
     min-height: calc(100vh - 12px);
-    border-radius: 8px;
+    border-radius: var(--radius-box);
     padding: 14px;
   }
 
   .hero-panel {
     grid-template-columns: 1fr;
     padding: 34px 24px;
+    min-height: clamp(300px, 48vw, 440px);
+  }
+
+  .hero-logo-stage {
+    transform: translateY(clamp(14px, 2.4vh, 26px));
   }
 
   .hero-logo {
-    top: 14px;
-    left: 14px;
-    width: clamp(96px, 26vw, 132px);
-  }
-
-  .hero-status {
-    top: auto;
-    right: auto;
-    bottom: 18px;
-    left: 18px;
-    justify-items: start;
-    text-align: left;
-    padding: 8px 10px;
-    font-size: 9px;
+    width: min(86vw, 720px);
+    transform: scale(1.5);
   }
 
   .info-bar {
@@ -1651,8 +1661,25 @@ svg {
     display: none;
   }
 
-  .hero-menu-toggle {
+  .mobile-section-switcher {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .mobile-section-switcher .hero-menu-toggle {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    z-index: 6;
     display: flex;
+    width: 100%;
+    min-height: 42px;
+    padding: 0 14px;
+    box-sizing: border-box;
+    justify-content: space-between;
+    border-radius: var(--radius-box);
   }
 
   .hero-menu-overlay {
@@ -1674,11 +1701,11 @@ svg {
   }
 
   .hero-mobile-tabs {
-    gap: 10px;
+    gap: 12px;
   }
 
-  .hero-mobile-tab {
-    min-height: 64px;
+  .hero-mobile-tab .tab-image {
+    max-height: clamp(44px, 11vh, 72px);
   }
 
   .store-status-banner {
@@ -1707,27 +1734,32 @@ svg {
     transform: translateX(-50%);
     width: min(96vw, 420px);
   }
+
+  .photo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
 }
 
 @media (max-width: 560px) {
   .hero-panel {
-    min-height: 420px;
-    padding: 88px 18px 92px;
+    min-height: clamp(340px, 52vh, 500px);
+    padding: 52px 18px 36px;
     place-items: center;
   }
 
-  .hero-logo {
-    left: 50%;
-    top: 14px;
-    transform: translateX(-50%);
-    width: clamp(120px, 40vw, 150px);
+  .hero-logo-stage {
+    transform: translateY(clamp(12px, 2.1vh, 22px));
   }
 
-  .hero-menu-toggle {
-    top: 12px;
-    right: 12px;
-    min-height: 34px;
-    padding: 0 8px;
+  .hero-logo {
+    width: min(92vw, 600px);
+    transform: scale(1.44);
+  }
+
+  .mobile-section-switcher .hero-menu-toggle {
+    min-height: 38px;
+    padding: 0 12px;
     font-size: 9px;
   }
 
@@ -1740,41 +1772,19 @@ svg {
   }
 
   .hero-mobile-tabs {
-    gap: 6px;
+    gap: 10px;
   }
 
-  .hero-mobile-tab {
-    min-height: 56px;
-  }
-
-  .hero-copy {
-    width: 100%;
-    align-content: center;
-    text-align: center;
-  }
-
-  .hero-copy h1 {
-    font-size: 33px;
-    text-align: center;
-  }
-
-  .hero-copy p {
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .hero-status {
-    left: 50%;
-    bottom: 14px;
-    transform: translateX(-50%);
-    justify-items: center;
-    text-align: center;
-    width: min(92%, 280px);
+  .hero-mobile-tab .tab-image {
+    max-height: clamp(40px, 10vh, 64px);
   }
 
   .challenge-grid,
-  .photo-grid,
   .training-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-grid {
     grid-template-columns: 1fr;
   }
 

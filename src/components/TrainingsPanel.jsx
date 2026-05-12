@@ -1,5 +1,4 @@
 import { trainingWeeks } from '../data/campaignData.js';
-import { Annotation } from './Annotation.jsx';
 import trainingThumb1 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_35 PM (1).png';
 import trainingThumb2 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_36 PM (2).png';
 import trainingThumb3 from '../../assets_tab/thumb/ChatGPT Image May 7, 2026, 04_06_36 PM (3).png';
@@ -30,10 +29,6 @@ export function TrainingsPanel() {
   return (
     <section className="panel-body">
       <h2 className="panel-title">Trainings</h2>
-      <Annotation>
-        <strong>Dev note:</strong> Current week displays first. Previous weeks stack below in reverse chronological order.
-        Completed trainings show a green check overlay on the thumbnail. Each row accommodates up to four cards wide.
-      </Annotation>
 
       <div className="training-weeks">
         {trainingWeeks.map((week) => (
