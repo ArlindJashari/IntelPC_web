@@ -95,14 +95,14 @@ svg {
 
 /* ---------- Hero follows IPC_2026_Mockup organization ---------- */
 .hero-panel {
-  min-height: clamp(320px, 42vw, 480px);
-  margin-bottom: clamp(40px, 6.5vh, 96px);
+  min-height: clamp(239px, 31.4vw, 359px);
+  margin-bottom: clamp(30px, 4.8vh, 72px);
   border: 1px solid rgba(0,0,0,0.82);
   background: #04081b;
   color: var(--color-digital-white);
   box-shadow: inset 0 0 0 4px rgba(0,0,0,0.82), inset 0 0 0 5px rgba(255,255,255,0.18);
   border-radius: var(--radius-box);
-  padding: 46px 44px;
+  padding: 34px 33px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 0;
@@ -151,20 +151,20 @@ svg {
   pointer-events: none;
   overflow: visible;
   /* Nudge down so scaled logo bleeds past bottom of dark hero like the top */
-  transform: translateY(clamp(18px, 2.6vh, 32px));
+  transform: translateY(clamp(15px, 2.2vh, 27px));
 }
 
 .hero-logo {
   display: block;
-  width: min(82vw, 780px);
+  width: min(70vw, 663px);
   height: auto;
   max-width: none;
   object-fit: contain;
   object-position: center;
   /* max-width + height fight intrinsic sizing; scale paints past the dark hero reliably */
-  transform: scale(1.56);
+  transform: scale(1.33);
   transform-origin: center center;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.5));
 }
 
 /* Mobile-only strip; full-width layout in max-width:900px media block */
@@ -1631,17 +1631,17 @@ svg {
 
   .hero-panel {
     grid-template-columns: 1fr;
-    padding: 34px 24px;
-    min-height: clamp(300px, 48vw, 440px);
+    padding: 26px 18px;
+    min-height: clamp(224px, 35.9vw, 329px);
   }
 
   .hero-logo-stage {
-    transform: translateY(clamp(14px, 2.4vh, 26px));
+    transform: translateY(clamp(12px, 2.04vh, 22px));
   }
 
   .hero-logo {
-    width: min(86vw, 720px);
-    transform: scale(1.5);
+    width: min(73vw, 612px);
+    transform: scale(1.275);
   }
 
   .info-bar {
@@ -1743,18 +1743,18 @@ svg {
 
 @media (max-width: 560px) {
   .hero-panel {
-    min-height: clamp(340px, 52vh, 500px);
-    padding: 52px 18px 36px;
+    min-height: clamp(254px, 38.9vh, 374px);
+    padding: 39px 13px 27px;
     place-items: center;
   }
 
   .hero-logo-stage {
-    transform: translateY(clamp(12px, 2.1vh, 22px));
+    transform: translateY(clamp(10px, 1.79vh, 19px));
   }
 
   .hero-logo {
-    width: min(92vw, 600px);
-    transform: scale(1.44);
+    width: min(78vw, 510px);
+    transform: scale(1.22);
   }
 
   .mobile-section-switcher .hero-menu-toggle {

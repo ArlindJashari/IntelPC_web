@@ -11,7 +11,7 @@ export function Hero() {
           colors={['#A923F1', '#1E1EFF']}
           speed1={0.05}
           speed2={0.05}
-          focalLength={0.95}
+          focalLength={1.32}
           bend1={1.1}
           bend2={0.6}
           dir2={1}
