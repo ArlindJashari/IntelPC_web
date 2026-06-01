@@ -1633,6 +1633,7 @@ svg {
     grid-template-columns: 1fr;
     padding: 26px 18px;
     min-height: clamp(224px, 35.9vw, 329px);
+    margin-bottom: 92px;
   }
 
   .hero-logo-stage {
@@ -1745,6 +1746,7 @@ svg {
   .hero-panel {
     min-height: clamp(254px, 38.9vh, 374px);
     padding: 39px 13px 27px;
+    margin-bottom: 104px;
     place-items: center;
   }
 
@@ -2266,11 +2268,27 @@ svg {
 
 @media (max-width: 900px) {
   .retailer-selector-container {
-    position: static;
-    width: 100%;
-    margin-top: 16px;
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: min(100%, 560px);
+    min-height: 50px;
+    margin: 0 auto;
+    padding: 8px 10px;
     justify-content: center;
     border-radius: var(--radius-box);
+  }
+
+  .selector-label,
+  .selector-btn {
+    white-space: nowrap;
+  }
+
+  .selector-btn {
+    min-height: 32px;
+    padding: 0 12px;
   }
 
   .weekly-draw-showcase {
@@ -2299,6 +2317,22 @@ svg {
 }
 
 @media (max-width: 560px) {
+  .retailer-selector-container {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .retailer-selector {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .selector-btn {
+    flex: 1 1 0;
+    padding: 0 8px;
+    font-size: 8.5px;
+  }
+
   .weekly-tabs {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2383,4 +2417,3 @@ svg {
     filter: brightness(1.2) drop-shadow(0 0 4px currentColor);
   }
 }
-

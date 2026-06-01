@@ -78,7 +78,7 @@ const WEEKLY_PRIZES = {
       {
         name: 'Intel® Core™ Ultra 9 Processor 285K',
         winners: '5 winners',
-        desc: "Power up your build with Intel's flagship desktop processor. 24 cores, up to 3.70 GHz, with AI-accelerated performance for gamers, creators, and everything in between."
+        desc: "Power up your build with Intel's flagship desktop processor. 24 cores, up to 3.70 GHz, with AI-accelerated performance for gamers, creators, and everything in between"
       },
       {
         name: 'SteelSeries Arctis Nova Pro White Gaming Headset',
@@ -124,6 +124,15 @@ const WEEKLY_PRIZES = {
   }
 };
 
+const WEEKLY_DRAWING_LABELS = {
+  1: 'Week 1 Drawing',
+  2: 'Week 2 Drawing',
+  3: 'Week 3 Drawing',
+  4: 'Week 4 Drawing',
+  5: 'Week 5 Drawing',
+  6: 'Week 6 Drawing'
+};
+
 export function PrizesPanel({ retailer }) {
   const [selectedWeek, setSelectedWeek] = useState(1);
   const weekData = WEEKLY_PRIZES[selectedWeek];
@@ -153,6 +162,7 @@ export function PrizesPanel({ retailer }) {
               type="button"
               className={`weekly-tab-btn ${selectedWeek === weekNum ? 'active' : ''}`}
               onClick={() => setSelectedWeek(weekNum)}
+              aria-label={WEEKLY_DRAWING_LABELS[weekNum]}
             >
               Week {weekNum}
             </button>
@@ -174,7 +184,7 @@ export function PrizesPanel({ retailer }) {
           </div>
 
           <div className="weekly-draw-list">
-            <h4 className="weekly-draw-heading">Week {selectedWeek} Prize Pool</h4>
+            <h4 className="weekly-draw-heading">{WEEKLY_DRAWING_LABELS[selectedWeek]}</h4>
             <div className="weekly-prize-grid">
               {weekData.prizes.map((prize, idx) => (
                 <div className="weekly-prize-card" key={idx}>
@@ -203,7 +213,7 @@ export function PrizesPanel({ retailer }) {
               Intel PC Champion Bundle
             </h4>
             <p className="grand-prize-subtitle">
-              Fifteen (15) prize packages featuring a premium Series 3 Intel® Core™ Ultra-powered laptop and a SteelSeries gaming kit are up for grabs!
+              Fifteen (15) prize packages featuring a premium Series 3 Intel® Core™ Ultra-powered laptop and a SteelSeries gaming kits are up for grabs!
             </p>
           </div>
 
@@ -221,22 +231,22 @@ export function PrizesPanel({ retailer }) {
             </div>
 
             <div className="grand-prize-details">
-              <h5 className="details-list-title">Bundle Includes:</h5>
+              <h5 className="details-list-title">Bundle Includes</h5>
               <ul className="grand-prize-list">
                 <li>
                   <strong className="bullet-strong">Series 3 Intel® Core™ Ultra-powered laptop</strong>
                 </li>
                 <li>
                   <strong className="bullet-strong">SteelSeries Arctis Nova Pro Wireless Headset (Black)</strong>
-                  <span className="bullet-desc">Premium wireless gaming headset with active noise cancellation, Dual-battery system, retractable mic, and multi-platform support.</span>
+                  <span className="bullet-desc">Premium wireless gaming headset with active noise cancellation, Dual-battery system, retractable mic, and multi-platform support</span>
                 </li>
                 <li>
                   <strong className="bullet-strong">SteelSeries Aerox 5 Gaming Mouse</strong>
-                  <span className="bullet-desc">Ultra-lightweight wired gaming mouse with 9 programmable buttons, optical sensor, and USB-C connectivity.</span>
+                  <span className="bullet-desc">Ultra-lightweight wired gaming mouse with 9 programmable buttons, optical sensor, and USB-C connectivity</span>
                 </li>
                 <li>
                   <strong className="bullet-strong">SteelSeries QcK Prism Mouse Pad</strong>
-                  <span className="bullet-desc">RGB-lit gaming surface, Optimized for precision and speed.</span>
+                  <span className="bullet-desc">RGB-lit gaming surface, Optimized for precision and speed</span>
                 </li>
               </ul>
             </div>
@@ -253,7 +263,7 @@ export function PrizesPanel({ retailer }) {
               Store Grand Prize Drawing
             </h4>
             <p className="store-grand-prize-desc">
-              At the end of the promotion, qualifying Best Buy stores will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful training completions will have earned one (1) Drawing entry into the Store Grand Prize. Up to 10 winning Stores will be recognized with a store recognition plaque, individual recognition certificates, breakroom snacks, and multiple days of catering.
+              At the end of the promotion, qualifying Best Buy stores we will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful training completions will have earned one (1) Drawing entry into the Store Grand Prize. Up to 10 winning Stores will be recognized with a store recognition plaque, individual recognition certificates, breakroom snacks, and multiple days of catering.
             </p>
           </article>
         </>

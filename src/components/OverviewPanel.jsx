@@ -73,7 +73,7 @@ export function OverviewPanel({ retailer }) {
           For each Weekly Training you successfully complete you will earn one (1) entry into that week’s Drawing. Entries earned in a particular week apply only to that week’s Drawing and do not carry over to any subsequent weeks (if any).
         </p>
         <p>
-          Complete the featured weekly trainings by <strong>10:59am on the following Wednesday</strong> to be entered into the drawing for the week.
+          Complete the feature weekly trainings by <strong>10:59am on the following Wednesday</strong> to be entered into the drawing for the week.
         </p>
 
         <div className="prize-image-wrapper">
@@ -109,7 +109,7 @@ export function OverviewPanel({ retailer }) {
               Best Buy Store Grand Prize Drawing
             </h4>
             <p>
-              At the end of the promotion, qualifying Best Buy stores will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful training completions have earned one (1) Drawing entry into the Store Grand Prize. Up to 10 winning Stores will be recognized with a plaque, breakroom snacks, and multiple days of catering.
+              At the end of the promotion, qualifying Best Buy stores we will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful training completions have earned one (1) Drawing entry into the Store Grand Prize. Up to 10 winning Stores will be recognized with a plaque, breakroom snacks, and multiple days of catering.
             </p>
             <p>
               Visit the <a href="#prizes" className="blue-underlined">Prizes page</a> for full details!
