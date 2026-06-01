@@ -132,10 +132,11 @@ export function PrizesPanel({ retailer }) {
     <section className="panel-body">
       <h2 className="panel-title">Prizes</h2>
 
-      <div className="overview-intro-card">
-        <p className="overview-intro-text">
+      <div className="notion-callout info-callout">
+        <span className="notion-callout-icon" aria-hidden="true">🎁</span>
+        <div className="notion-callout-content">
           Exciting Rewards are up for grabs on your journey to become an Intel PC Champion! Weekly Drawings, Individual Grand Prize bundles, and Store Grand Prize celebrations!
-        </p>
+        </div>
       </div>
 
       <h3 className="section-title">Weekly Drawings</h3>

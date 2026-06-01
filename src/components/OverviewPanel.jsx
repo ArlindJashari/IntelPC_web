@@ -5,10 +5,11 @@ export function OverviewPanel({ retailer }) {
     <section className="panel-body">
       <h2 className="panel-title">Overview</h2>
 
-      <div className="overview-intro-card">
-        <p className="overview-intro-text">
+      <div className="notion-callout info-callout">
+        <span className="notion-callout-icon" aria-hidden="true">💡</span>
+        <div className="notion-callout-content">
           The competition is on! Back-to-school season right around the corner so it's time to get up to speed on the latest PCs from leading OEM. Complete trainings to build your product expertise, take on challenges to prove your skills, and if eligible*, earn entries into Drawings packed with exciting rewards.
-        </p>
+        </div>
       </div>
 
       <h3 className="section-title">How to Participate</h3>
