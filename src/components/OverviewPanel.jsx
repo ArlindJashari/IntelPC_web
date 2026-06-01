@@ -25,11 +25,9 @@ export function OverviewPanel({ retailer }) {
           <p>
             Complete all featured trainings during the promotion period to be entered into the Individual Grand Prize Drawing!
           </p>
-          <div className="overview-link-box">
-            <a href="#trainings" className="panel-link blue-underlined">
-              Track your training completion on the Trainings page.
-            </a>
-          </div>
+          <p>
+            Track your training completion on the <a href="#trainings" className="blue-underlined">Trainings page</a>.
+          </p>
         </article>
 
         <article className="content-card">
@@ -58,11 +56,9 @@ export function OverviewPanel({ retailer }) {
             <p>
               Succeed at both and your store earns its entry into the Store Grand Prize Drawing.
             </p>
-            <div className="overview-link-box">
-              <a href="#challenges" className="panel-link blue-underlined">
-                Track your Challenge completion on the Challenges page.
-              </a>
-            </div>
+            <p>
+              Track your Challenge completion on the <a href="#challenges" className="blue-underlined">Challenges page</a>.
+            </p>
           </article>
         )}
       </section>
@@ -114,17 +110,17 @@ export function OverviewPanel({ retailer }) {
             <p>
               At the end of the promotion, qualifying Best Buy stores will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful training completions have earned one (1) Drawing entry into the Store Grand Prize. Up to 10 winning Stores will be recognized with a plaque, breakroom snacks, and multiple days of catering.
             </p>
-            <div className="overview-link-box">
-              <a href="#prizes" className="panel-link blue-underlined">
-                Visit the Prizes page for full details!
-              </a>
-            </div>
+            <p>
+              Visit the <a href="#prizes" className="blue-underlined">Prizes page</a> for full details!
+            </p>
           </article>
         )}
       </section>
 
       <section className="content-actions-footer">
-        <a href="#" className="panel-link blue-underlined terms-link">*View Terms and Conditions.</a>
+        <p className="terms-footnote">
+          *View <a href="#" className="blue-underlined terms-link">Terms and Conditions</a>.
+        </p>
       </section>
     </section>
   );

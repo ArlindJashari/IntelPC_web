@@ -259,7 +259,9 @@ export function PrizesPanel({ retailer }) {
       )}
 
       <section className="content-actions-footer">
-        <a href="#" className="panel-link blue-underlined terms-link">*View Terms and Conditions.</a>
+        <p className="terms-footnote">
+          *View <a href="#" className="blue-underlined terms-link">Terms and Conditions</a>.
+        </p>
       </section>
     </section>
   );
