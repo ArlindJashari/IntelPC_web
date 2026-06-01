@@ -2298,3 +2298,80 @@ svg {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Animated SVG Circuit Board Overlay ---------- */
+
+.circuit-bg-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0.95;
+  background: radial-gradient(circle at 50% 50%, rgba(4, 8, 27, 0.2) 0%, rgba(2, 4, 12, 0.8) 100%);
+  z-index: 1;
+}
+
+/* Pulse keyframes for signals shooting OUTWARDS from the center shield */
+.circuit-pulse-line-left {
+  stroke-dasharray: 20 200;
+  stroke-dashoffset: 220;
+  animation: circuitPulseLeft var(--pulse-duration, 2.5s) ease-in-out infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+
+@keyframes circuitPulseLeft {
+  0% {
+    stroke-dashoffset: 220;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: -220;
+    opacity: 0;
+  }
+}
+
+.circuit-pulse-line-right {
+  stroke-dasharray: 20 200;
+  stroke-dashoffset: -220;
+  animation: circuitPulseRight var(--pulse-duration, 2.5s) ease-in-out infinite;
+  animation-delay: var(--pulse-delay, 0s);
+}
+
+@keyframes circuitPulseRight {
+  0% {
+    stroke-dashoffset: -220;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 220;
+    opacity: 0;
+  }
+}
+
+/* Pulsing terminal dots representing blinking LEDs on the board */
+.circuit-node-pulse {
+  animation: nodeLedBlink 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes nodeLedBlink {
+  0% {
+    opacity: 0.55;
+    filter: brightness(0.85);
+  }
+  100% {
+    opacity: 1;
+    filter: brightness(1.2) drop-shadow(0 0 4px currentColor);
+  }
+}
+
