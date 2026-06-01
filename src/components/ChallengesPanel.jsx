@@ -72,7 +72,7 @@ function StoreChallenge() {
   );
 }
 
-export function ChallengesPanel({ onUpload }) {
+export function ChallengesPanel({ onUpload, retailer }) {
   return (
     <section className="panel-body">
       <h2 className="panel-title">Challenges</h2>
@@ -85,9 +85,12 @@ export function ChallengesPanel({ onUpload }) {
         ))}
       </div>
 
-      <h3 className="section-title">Store Challenge</h3>
-
-      <StoreChallenge />
+      {retailer === 'bestbuy' && (
+        <>
+          <h3 className="section-title">Store Challenge</h3>
+          <StoreChallenge />
+        </>
+      )}
     </section>
   );
 }

@@ -1,100 +1,130 @@
 import { Icon } from './Icon.jsx';
-import { Annotation } from './Annotation.jsx';
 
-export function OverviewPanel() {
-  const weeklyDeadlines = [
-    { week: 'Week 1', deadline: 'June 10 at 11 a.m. CT' },
-    { week: 'Week 2', deadline: 'June 17 at 11 a.m. CT' },
-    { week: 'Week 3', deadline: 'June 24 at 11 a.m. CT' },
-    { week: 'Week 4', deadline: 'July 1 at 11 a.m. CT' },
-    { week: 'Week 5', deadline: 'July 8 at 11 a.m. CT' },
-    { week: 'Week 6', deadline: 'July 15 at 11 a.m. CT' }
-  ];
-
+export function OverviewPanel({ retailer }) {
   return (
     <section className="panel-body">
       <h2 className="panel-title">Overview</h2>
 
-      <Annotation aria-label="Campaign summary">
-        <p>
-          <strong>How this promotion works</strong>{' '}
-          You&apos;ve set out on an expedition into uncharted territory, where Rewards lie hidden.
-          Use your knowledge to chart your path forward.
+      <div className="overview-intro-card">
+        <p className="overview-intro-text">
+          The competition is on! Back-to-school season right around the corner so it's time to get up to speed on the latest PCs from leading OEM. Complete trainings to build your product expertise, take on challenges to prove your skills, and if eligible*, earn entries into Drawings packed with exciting rewards.
         </p>
-        <p>Over six weeks, take trainings, complete challenges, and earn drawing entries.</p>
-      </Annotation>
+      </div>
 
-      <h3 className="section-title">How to Earn Entries</h3>
+      <h3 className="section-title">How to Participate</h3>
       <section className="content-grid">
         <article className="content-card">
-          <h4 className="content-heading"><Icon name="checkBox" className="content-heading-icon" />Trainings</h4>
+          <h4 className="content-heading">
+            <Icon name="checkBox" className="content-heading-icon" />
+            Take Trainings, Complete Challenges, and Earn Drawing Entries
+          </h4>
           <p>
-            Each week, three promotion trainings are posted. Complete all three within the same
-            week to be automatically entered into that week&apos;s Weekly Drawing.
+            Each week during the promotion period trainings will be posted to the Trainings page.
+            Pass the featured trainings within the week they are posted to earn entries into the Weekly Prize Drawings.
           </p>
           <p>
-            At the end of the promotion, participants who complete all promotional trainings at
-            any time during the promotion timeframe are entered into the Individual Grand Prize Drawing.
+            Complete all featured trainings during the promotion period to be entered into the Individual Grand Prize Drawing!
           </p>
-          <a href="#trainings" className="panel-link">Track training completion on the Trainings page</a>
+          <div className="overview-link-box">
+            <a href="#trainings" className="panel-link blue-underlined">
+              Track your training completion on the Trainings page.
+            </a>
+          </div>
         </article>
 
         <article className="content-card">
-          <h4 className="content-heading"><Icon name="star" className="content-heading-icon" />Individual Challenges</h4>
+          <h4 className="content-heading">
+            <Icon name="star" className="content-heading-icon" />
+            Individual Challenges
+          </h4>
           <p>
-            During the promotion, there are 7 individual challenges to complete for additional
-            participation opportunities.
+            During the promotion, there are 7 Individual Challenges waiting to be conquered. Complete each one to earn additional entries into the Individual Grand Prize Drawing!*
           </p>
         </article>
 
-        <article className="content-card">
-          <h4 className="content-heading"><Icon name="store" className="content-heading-icon" />Store Challenges</h4>
-          <p>
-            During the promotion, there are 2 store challenges. Stores that complete both
-            criteria are entered into the Store Grand Prize Drawing.
-          </p>
-          <a href="#challenges" className="panel-link">Track challenge completion on the Challenges page</a>
-        </article>
-      </section>
-
-      <h3 className="section-title">Weekly Drawing Schedule</h3>
-      <section className="timeline-list">
-        {weeklyDeadlines.map((item) => (
-          <article className="timeline-row" key={item.week}>
-            <h4><Icon name="calendar" className="timeline-icon" />{item.week} Drawing</h4>
-            <p>Complete the {item.week} trainings by {item.deadline} to be entered.</p>
+        {retailer === 'bestbuy' && (
+          <article className="content-card">
+            <h4 className="content-heading">
+              <Icon name="store" className="content-heading-icon" />
+              Store Challenges
+            </h4>
+            <p>
+              During the promotion, there are 2 Store Challenges that work together to put your store in the running for the Store Grand Prize Drawing*:
+            </p>
+            <ul className="overview-bullet-list">
+              <li>Get 4 or more teammates from your store actively participating in the promotion.</li>
+              <li>Reach a combined total of 72 unique featured Intel PC Champion training completions across your store.</li>
+            </ul>
+            <p>
+              Succeed at both and your store earns its entry into the Store Grand Prize Drawing.
+            </p>
+            <div className="overview-link-box">
+              <a href="#challenges" className="panel-link blue-underlined">
+                Track your Challenge completion on the Challenges page.
+              </a>
+            </div>
           </article>
-        ))}
+        )}
       </section>
 
-      <Annotation aria-label="Weekly drawing timing">
+      <h3 className="section-title">Weekly Drawings</h3>
+      <article className="overview-info-block">
         <p>
-          You must complete all trainings within the week they are posted to the promotion
-          Trainings page to be entered into that week&apos;s Weekly Drawing.
+          Complete the featured weekly trainings within the week they are posted to earn drawing entries.
         </p>
-      </Annotation>
+        <p>
+          For each Weekly Training you successfully complete you will earn one (1) entry into that week’s Drawing. Entries earned in a particular week apply only to that week’s Drawing and do not carry over to any subsequent weeks (if any).
+        </p>
+        <p>
+          Complete the featured weekly trainings by <strong>10:59am on the following Wednesday</strong> to be entered into the drawing for the week.
+        </p>
+
+        <div className="prize-image-wrapper">
+          <img 
+            src="/prize/IPC Prizes Overview.png" 
+            alt="Intel PC Champions Prizes Overview" 
+            className="prize-overview-image" 
+            loading="lazy"
+          />
+          <div className="image-overlay-glow" />
+        </div>
+      </article>
 
       <h3 className="section-title">Grand Prize Drawings</h3>
       <section className="content-grid">
         <article className="content-card">
-          <h4 className="content-heading"><Icon name="trophy" className="content-heading-icon" />Individual Grand Prize Drawing</h4>
+          <h4 className="content-heading">
+            <Icon name="trophy" className="content-heading-icon" />
+            Individual Grand Prize Drawing
+          </h4>
           <p>
-            At the end of the promotion, winners are selected from participants who completed all
-            promotion trainings during the promotion timeframe.
+            Intel PC Champions (participant) from eligible accounts who successfully completed all 18 featured weekly trainings will unlock access to the Individual Grand Prize Drawing, earning one (1) entry.
+          </p>
+          <p>
+            After meeting the training qualification to unlock access to the Grand Prize Drawing, each Individual Challenge you successfully complete will earn you one (1) additional entry into the Individual Grand Prize Drawing. Submission of photo-based Individual Challenges only earn an entry once the submission is set to "Approved" status. If you complete an Individual Challenge before the Qualification Requirement is met you will be credited retroactively once the training Qualification Requirement is satisfied.
           </p>
         </article>
-        <article className="content-card">
-          <h4 className="content-heading"><Icon name="trophy" className="content-heading-icon" />Store Grand Prize Drawing</h4>
-          <p>
-            At the end of the promotion, winners are selected from stores that met the store
-            challenge requirements during the promotion timeframe.
-          </p>
-        </article>
+
+        {retailer === 'bestbuy' && (
+          <article className="content-card">
+            <h4 className="content-heading">
+              <Icon name="trophy" className="content-heading-icon" />
+              Best Buy Store Grand Prize Drawing
+            </h4>
+            <p>
+              At the end of the promotion, qualifying Best Buy stores will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful training completions have earned one (1) Drawing entry into the Store Grand Prize. Up to 10 winning Stores will be recognized with a plaque, breakroom snacks, and multiple days of catering.
+            </p>
+            <div className="overview-link-box">
+              <a href="#prizes" className="panel-link blue-underlined">
+                Visit the Prizes page for full details!
+              </a>
+            </div>
+          </article>
+        )}
       </section>
 
-      <section className="content-actions">
-        <a href="#prizes" className="panel-link"><Icon name="link" className="panel-link-icon" />Visit the Prizes page for full details</a>
-        <a href="#" className="panel-link"><Icon name="link" className="panel-link-icon" />View Terms and Conditions</a>
+      <section className="content-actions-footer">
+        <a href="#" className="panel-link blue-underlined terms-link">*View Terms and Conditions.</a>
       </section>
     </section>
   );

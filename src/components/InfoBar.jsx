@@ -7,10 +7,15 @@ const iconByStat = {
   store: 'store'
 };
 
-export function InfoBar() {
+export function InfoBar({ retailer }) {
+  const filteredStats = infoStats.filter((stat) => {
+    if (stat.id === 'store') return retailer === 'bestbuy';
+    return true;
+  });
+
   return (
     <section className="info-bar" aria-label="Persistent campaign stats">
-      {infoStats.map((stat) => (
+      {filteredStats.map((stat) => (
         <article className="stat-card" key={stat.id}>
           <Icon name={iconByStat[stat.id]} className="stat-icon" />
           <div className="stat-content">

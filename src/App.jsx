@@ -21,19 +21,19 @@ function getTabFromHash() {
   return TAB_IDS.has(hashTab) ? hashTab : DEFAULT_TAB;
 }
 
-function ActivePanel({ activeTab, onUpload }) {
+function ActivePanel({ activeTab, onUpload, retailer }) {
   switch (activeTab) {
     case 'overview':
-      return <OverviewPanel />;
+      return <OverviewPanel retailer={retailer} />;
     case 'trainings':
       return <TrainingsPanel />;
     case 'prizes':
-      return <PrizesPanel />;
+      return <PrizesPanel retailer={retailer} />;
     case 'photowall':
       return <PhotoWallPanel />;
     case 'challenges':
     default:
-      return <ChallengesPanel onUpload={onUpload} />;
+      return <ChallengesPanel onUpload={onUpload} retailer={retailer} />;
   }
 }
 
@@ -41,6 +41,14 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(getTabFromHash);
   const [uploadChallenge, setUploadChallenge] = useState(null);
   const [notifications, setNotifications] = useState([]);
+  const [retailer, setRetailer] = useState(() => {
+    return localStorage.getItem('ipc_retailer') || 'bestbuy';
+  });
+
+  const handleRetailerChange = (newRetailer) => {
+    setRetailer(newRetailer);
+    localStorage.setItem('ipc_retailer', newRetailer);
+  };
 
   useEffect(() => {
     const syncFromHash = () => {
@@ -101,11 +109,11 @@ export default function App() {
         <span className="page-screw screw-three" />
         <span className="page-screw screw-four" />
 
-        <Hero />
+        <Hero retailer={retailer} onRetailerChange={handleRetailerChange} />
         <MobileSectionSwitcher activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
-        <InfoBar />
+        <InfoBar retailer={retailer} />
         <Tabs activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
-        <ActivePanel activeTab={activeTab} onUpload={setUploadChallenge} />
+        <ActivePanel activeTab={activeTab} onUpload={setUploadChallenge} retailer={retailer} />
       </main>
 
       <UploadModal
