@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { BrandMark } from './BrandMark.jsx';
 import { Icon } from './Icon.jsx';
 
 const WEEKLY_PRIZES = {
@@ -203,8 +204,14 @@ export function PrizesPanel({ retailer }) {
       <h3 className="section-title">Individual Grand Prize</h3>
       <article className="prizes-section-card">
         <p className="prizes-section-intro">
-          Complete all featured trainings within the promotion period to be automatically entered to win an Individual Grand Prize bundle. Complete Individual Challenges to earn additional entries. <em className="eligibility-note">*Please see Terms & Conditions for eligibility</em>
+          Complete all featured trainings within the promotion period to be automatically entered to win an Individual Grand Prize bundle. Complete Individual Challenges to earn additional entries.
         </p>
+
+        <div className="prize-brand-row" aria-label="Challenge partner logos">
+          <BrandMark brand="lenovo" />
+          <BrandMark brand="norton" />
+          <BrandMark brand="acer" />
+        </div>
 
         <div className="grand-prize-showcase">
           <div className="grand-prize-header">
@@ -269,11 +276,6 @@ export function PrizesPanel({ retailer }) {
         </>
       )}
 
-      <section className="content-actions-footer">
-        <p className="terms-footnote">
-          *View <a href="/terms" className="blue-underlined terms-link">Terms and Conditions</a>.
-        </p>
-      </section>
     </section>
   );
 }
