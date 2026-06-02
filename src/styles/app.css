@@ -93,6 +93,31 @@ svg {
 .panel-screw-tl { top: 12px; left: 12px; }
 .panel-screw-tr { top: 12px; right: 12px; }
 
+.site-footer {
+  width: 93%;
+  margin: 14px auto 0;
+  position: relative;
+  z-index: 1;
+  text-align: left;
+}
+
+.site-footer-link {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-plasma-geode);
+  font: 800 18px/1 var(--font-proxima-nova);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.site-footer-link:hover,
+.site-footer-link:focus-visible {
+  color: var(--color-digital-white);
+  outline: none;
+}
+
 .terms-shell {
   overflow: visible;
 }
