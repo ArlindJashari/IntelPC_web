@@ -14,7 +14,11 @@ export function InfoBar({ retailer }) {
   });
 
   return (
-    <section className="info-bar" aria-label="Persistent campaign stats">
+    <section
+      className="info-bar"
+      data-count={filteredStats.length}
+      aria-label="Persistent campaign stats"
+    >
       {filteredStats.map((stat) => (
         <article className="stat-card" key={stat.id}>
           <Icon name={iconByStat[stat.id]} className="stat-icon" />

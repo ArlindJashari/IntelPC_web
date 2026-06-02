@@ -461,13 +461,17 @@ svg {
 /* ---------- Persistent info bar ---------- */
 .info-bar {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--info-card-count, 3), 1fr);
   margin-bottom: 16px;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,0.16);
   border-radius: var(--radius-box);
   background: rgba(255,255,255,0.22);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
+}
+
+.info-bar[data-count="2"] {
+  --info-card-count: 2;
 }
 
 .stat-card {
@@ -1011,6 +1015,23 @@ svg {
   color: #11161c;
   font-size: 22px;
   letter-spacing: 0;
+}
+
+.prize-brand-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 16px 0 20px;
+}
+
+.prize-brand-row .brand-chip-logo {
+  min-width: 118px;
+  min-height: 42px;
+}
+
+.prize-brand-row .brand-chip-img {
+  height: 26px;
+  max-width: 96px;
 }
 
 .challenge-identity h4 {
