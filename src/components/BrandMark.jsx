@@ -1,3 +1,5 @@
+import { Icon } from './Icon.jsx';
+
 /**
  * Primary (full-color) vector marks on a white tile — correct for dark surrounding UI.
  * `public/brands/`: Lenovo + Acer from Wikimedia (TM applies). Norton composite — prefer Gen Digital newsroom for masters.
@@ -22,7 +24,11 @@ export function BrandMark({ brand }) {
   const normalized = raw.toLowerCase();
 
   if (normalized === 'team') {
-    return <span className="brand-chip brand-chip-icon">♙</span>;
+    return (
+      <span className="brand-chip brand-chip-icon" aria-hidden="true">
+        <Icon name="users" className="brand-chip-svg" />
+      </span>
+    );
   }
 
   const logoSrc = brandLogoUrl(normalized);
