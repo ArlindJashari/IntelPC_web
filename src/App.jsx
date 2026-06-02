@@ -10,15 +10,28 @@ import { ChallengesPanel } from './components/ChallengesPanel.jsx';
 import { PhotoWallPanel } from './components/PhotoWallPanel.jsx';
 import { UploadModal } from './components/UploadModal.jsx';
 import { PushNotifications } from './components/PushNotifications.jsx';
+import { TermsPage } from './components/TermsPage.jsx';
 import ShapeGrid from './components/ShapeGrid.jsx';
 import { tabs } from './data/campaignData.js';
 
 const DEFAULT_TAB = 'challenges';
 const TAB_IDS = new Set(tabs.map((tab) => tab.id));
+const TERMS_PATH = '/terms';
 
 function getTabFromHash() {
   const hashTab = window.location.hash.replace('#', '');
   return TAB_IDS.has(hashTab) ? hashTab : DEFAULT_TAB;
+}
+
+function getTermsSlugFromPath() {
+  const path = window.location.pathname.replace(/\/+$/, '') || '/';
+
+  if (path === TERMS_PATH) return '';
+  if (path.startsWith(`${TERMS_PATH}/`)) {
+    return path.slice(TERMS_PATH.length + 1).split('/')[0];
+  }
+
+  return null;
 }
 
 function ActivePanel({ activeTab, onUpload, retailer }) {
@@ -38,6 +51,7 @@ function ActivePanel({ activeTab, onUpload, retailer }) {
 }
 
 export default function App() {
+  const termsSlug = getTermsSlugFromPath();
   const [activeTab, setActiveTab] = useState(getTabFromHash);
   const [uploadChallenge, setUploadChallenge] = useState(null);
   const [notifications, setNotifications] = useState([]);
@@ -89,6 +103,10 @@ export default function App() {
     }, 4200);
   };
 
+  if (termsSlug !== null) {
+    return <TermsPage slug={termsSlug} />;
+  }
+
   return (
     <div className="app-shell">
       <div className="app-shapegrid-bg" aria-hidden="true">
@@ -115,6 +133,10 @@ export default function App() {
         <Tabs activeTab={activeTab} setActiveTab={setActiveTabWithLink} />
         <ActivePanel activeTab={activeTab} onUpload={setUploadChallenge} retailer={retailer} />
       </main>
+
+      <footer className="site-footer">
+        <a className="site-footer-link" href="/terms">Terms and Conditions</a>
+      </footer>
 
       <UploadModal
         challengeName={uploadChallenge}

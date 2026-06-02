@@ -120,7 +120,7 @@ export function OverviewPanel({ retailer }) {
 
       <section className="content-actions-footer">
         <p className="terms-footnote">
-          *View <a href="#" className="blue-underlined terms-link">Terms and Conditions</a>.
+          *View <a href="/terms" className="blue-underlined terms-link">Terms and Conditions</a>.
         </p>
       </section>
     </section>

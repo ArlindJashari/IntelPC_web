@@ -93,6 +93,174 @@ svg {
 .panel-screw-tl { top: 12px; left: 12px; }
 .panel-screw-tr { top: 12px; right: 12px; }
 
+.site-footer {
+  width: 93%;
+  margin: 14px auto 0;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.site-footer-link {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: var(--radius-buttons);
+  background: rgba(7, 9, 13, 0.72);
+  color: var(--color-digital-white);
+  padding: 0 18px;
+  font: 800 11px/1 var(--font-sf-mono);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.site-footer-link:hover,
+.site-footer-link:focus-visible {
+  border-color: rgba(255,255,255,0.7);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 30, 255, 0.28);
+}
+
+.terms-shell {
+  overflow: visible;
+}
+
+.terms-chassis {
+  width: min(1180px, 93%);
+  margin: 0 auto;
+  min-height: calc(100vh - 48px);
+  padding: clamp(18px, 3vw, 34px);
+  position: relative;
+  overflow: visible;
+  background: var(--color-control-panel-grey);
+  border: 2px solid rgba(255,255,255,0.78);
+  border-radius: var(--radius-box);
+  z-index: 1;
+  box-shadow:
+    0 22px 70px rgba(0,0,0,0.45),
+    inset 0 0 0 1px rgba(0,0,0,0.22);
+}
+
+.terms-chassis > *:not(.page-screw) {
+  position: relative;
+  z-index: 1;
+}
+
+.terms-index,
+.terms-document {
+  border: 1px solid rgba(0,0,0,0.82);
+  border-radius: var(--radius-box);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(30, 30, 255, 0.2), transparent 34%),
+    #07090d;
+  color: var(--color-digital-white);
+  padding: clamp(18px, 3vw, 30px);
+  box-shadow: inset 0 0 0 4px rgba(0,0,0,0.72);
+}
+
+.terms-kicker {
+  margin: 0 0 8px;
+  color: #9da8ff;
+  font: 800 11px/1 var(--font-sf-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.terms-index h1,
+.terms-document h1 {
+  margin: 0;
+  font: 900 clamp(28px, 4vw, 50px)/0.95 var(--font-doto);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.terms-intro,
+.terms-audience {
+  max-width: 860px;
+  margin: 14px 0 0;
+  color: #c8cfdb;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.terms-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.terms-card {
+  min-height: 144px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: var(--radius-box);
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.02)),
+    rgba(255,255,255,0.04);
+  color: var(--color-digital-white);
+  padding: 18px;
+  text-decoration: none;
+}
+
+.terms-card:hover,
+.terms-card:focus-visible {
+  border-color: rgba(255,255,255,0.64);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.terms-card-title {
+  font: 900 16px/1.15 var(--font-sf-mono);
+  letter-spacing: 0.02em;
+}
+
+.terms-card-audience {
+  color: #c8cfdb;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.terms-document-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.terms-back-link {
+  flex: 0 0 auto;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: var(--radius-buttons);
+  background: rgba(255,255,255,0.06);
+  color: var(--color-digital-white);
+  padding: 0 14px;
+  font: 800 10px/1 var(--font-sf-mono);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.terms-iframe {
+  display: block;
+  width: 100%;
+  min-height: 72vh;
+  border: 0;
+  border-radius: calc(var(--radius-box) * 0.7);
+  background: #fff;
+}
+
 /* ---------- Hero follows IPC_2026_Mockup organization ---------- */
 .hero-panel {
   min-height: clamp(239px, 31.4vw, 359px);
@@ -2267,6 +2435,18 @@ svg {
 /* ---------- Responsive Adjustments for layout and widgets ---------- */
 
 @media (max-width: 900px) {
+  .terms-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .terms-document-head {
+    flex-direction: column;
+  }
+
+  .terms-back-link {
+    width: 100%;
+  }
+
   .retailer-selector-container {
     position: absolute;
     top: calc(100% + 12px);
