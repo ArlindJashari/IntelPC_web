@@ -98,7 +98,7 @@ svg {
   margin: 14px auto 0;
   position: relative;
   z-index: 1;
-  text-align: left;
+  text-align: center;
 }
 
 .site-footer-link {
@@ -106,16 +106,22 @@ svg {
   min-height: 34px;
   align-items: center;
   justify-content: center;
-  color: var(--color-plasma-geode);
-  font: 800 18px/1 var(--font-proxima-nova);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  border: 1px solid rgba(255,255,255,0.24);
+  border-radius: var(--radius-buttons);
+  background: rgba(7, 9, 13, 0.72);
+  color: var(--color-digital-white);
+  padding: 0 18px;
+  font: 800 11px/1 var(--font-sf-mono);
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
 .site-footer-link:hover,
 .site-footer-link:focus-visible {
-  color: var(--color-digital-white);
+  border-color: rgba(255,255,255,0.7);
   outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 30, 255, 0.28);
 }
 
 .terms-shell {
