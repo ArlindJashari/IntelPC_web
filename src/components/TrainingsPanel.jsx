@@ -30,13 +30,6 @@ export function TrainingsPanel() {
     <section className="panel-body">
       <h2 className="panel-title">Trainings</h2>
 
-      <div className="notion-callout info-callout">
-        <span className="notion-callout-icon" aria-hidden="true">🎓</span>
-        <div className="notion-callout-content">
-          Trainings (18 Total Trainings – new trainings available each week)
-        </div>
-      </div>
-
       <div className="training-weeks">
         {trainingWeeks.map((week) => (
           <section className="training-week" key={week.title}>

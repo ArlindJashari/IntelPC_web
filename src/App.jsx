@@ -11,6 +11,7 @@ import { PhotoWallPanel } from './components/PhotoWallPanel.jsx';
 import { UploadModal } from './components/UploadModal.jsx';
 import { PushNotifications } from './components/PushNotifications.jsx';
 import { TermsPage } from './components/TermsPage.jsx';
+import { Icon } from './components/Icon.jsx';
 import ShapeGrid from './components/ShapeGrid.jsx';
 import { tabs } from './data/campaignData.js';
 
@@ -135,7 +136,10 @@ export default function App() {
       </main>
 
       <footer className="site-footer">
-        <a className="site-footer-link" href="/terms">Terms and Conditions</a>
+        <a className="site-footer-link" href="/terms">
+          <span>Terms and Conditions</span>
+          <Icon name="star" className="site-footer-link-icon" />
+        </a>
       </footer>
 
       <UploadModal

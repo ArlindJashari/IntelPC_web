@@ -106,6 +106,7 @@ svg {
   min-height: 34px;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border: 1px solid rgba(255,255,255,0.24);
   border-radius: var(--radius-buttons);
   background: rgba(7, 9, 13, 0.72);
@@ -115,6 +116,19 @@ svg {
   letter-spacing: 0.08em;
   text-decoration: none;
   text-transform: uppercase;
+}
+
+.site-footer-link-icon {
+  width: 14px;
+  height: 14px;
+  color: #fbde2a;
+  flex: 0 0 auto;
+}
+
+.site-footer-link-icon path {
+  fill: currentColor;
+  stroke: rgba(17, 22, 28, 0.7);
+  stroke-width: 1.2;
 }
 
 .site-footer-link:hover,
@@ -480,10 +494,10 @@ svg {
 }
 
 .stat-card {
-  min-height: 82px;
+  min-height: 102px;
   padding: 16px 18px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 13px;
   border-right: 1px solid rgba(0,0,0,0.14);
 }
@@ -538,6 +552,12 @@ svg {
   color: var(--color-slate-blue);
   font-style: normal;
   font-size: 12px;
+}
+
+.stat-detail {
+  color: #4f5974;
+  font-size: 11px;
+  line-height: 1.35;
 }
 
 .stat-meter {
@@ -1053,8 +1073,8 @@ svg {
 }
 
 .prize-brand-row .brand-chip-norton {
-  flex-basis: clamp(128px, 11.2vw, 176px);
-  width: clamp(128px, 11.2vw, 176px);
+  flex-basis: clamp(116px, 10vw, 154px);
+  width: clamp(116px, 10vw, 154px);
 }
 
 .prize-brand-row .brand-chip-img {
@@ -1065,7 +1085,7 @@ svg {
 }
 
 .prize-brand-row .brand-chip-norton .brand-chip-img {
-  transform: scale(1.14);
+  transform: scale(1.04);
   transform-origin: center;
 }
 

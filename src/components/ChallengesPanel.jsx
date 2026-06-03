@@ -77,13 +77,6 @@ export function ChallengesPanel({ onUpload, retailer }) {
     <section className="panel-body">
       <h2 className="panel-title">Challenges</h2>
 
-      <div className="notion-callout info-callout">
-        <span className="notion-callout-icon" aria-hidden="true">⭐</span>
-        <div className="notion-callout-content">
-          Challenges (7 Total Challenges – available to complete for Promotion Period)
-        </div>
-      </div>
-
       <h3 className="section-title">Your Challenges</h3>
 
       <div className="challenge-grid">

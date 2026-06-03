@@ -38,8 +38,22 @@ export const hero = {
 };
 
 export const infoStats = [
-  { id: 'trainings', label: 'Trainings', value: '8 of 18', qualifier: 'complete', progress: 44 },
-  { id: 'challenges', label: 'Challenges', value: '3 of 7', qualifier: 'complete', progress: 43 },
+  {
+    id: 'trainings',
+    label: 'Trainings',
+    value: '8 of 18',
+    qualifier: 'complete',
+    detail: '18 total trainings - new trainings available each week',
+    progress: 44
+  },
+  {
+    id: 'challenges',
+    label: 'Challenges',
+    value: '3 of 7',
+    qualifier: 'complete',
+    detail: '7 total challenges - available to complete for promotion period',
+    progress: 43
+  },
   { id: 'store', label: 'Store', value: '1/4 participants', secondaryValue: '4/72 Trainings', progress: 6 }
 ];
 

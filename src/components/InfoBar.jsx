@@ -29,6 +29,7 @@ export function InfoBar({ retailer }) {
               {stat.secondaryValue && <strong>{stat.secondaryValue}</strong>}
               {stat.qualifier && <em>{stat.qualifier}</em>}
             </span>
+            {stat.detail && <span className="stat-detail">{stat.detail}</span>}
             <span className="stat-meter" aria-hidden="true">
               <i className="stat-meter-fill" style={{ '--progress-target': `${stat.progress}%` }} />
             </span>
