@@ -1059,6 +1059,11 @@ svg {
   max-height: 42px;
 }
 
+.prize-brand-row .brand-chip-norton .brand-chip-img {
+  transform: scale(1.14);
+  transform-origin: center;
+}
+
 .challenge-identity h4 {
   margin: 0;
   color: white;
