@@ -137,8 +137,8 @@ export default function App() {
 
       <footer className="site-footer">
         <a className="site-footer-link" href="/terms">
-          <span>Terms and Conditions</span>
           <Icon name="star" className="site-footer-link-icon" />
+          <span>Terms and Conditions</span>
         </a>
       </footer>
 
