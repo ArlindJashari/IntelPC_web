@@ -261,6 +261,11 @@ svg {
   background: #fff;
 }
 
+.terms-iframe-direct {
+  min-height: 100vh;
+  border-radius: 0;
+}
+
 /* ---------- Hero follows IPC_2026_Mockup organization ---------- */
 .hero-panel {
   min-height: clamp(239px, 31.4vw, 359px);
@@ -999,6 +1004,11 @@ svg {
   text-transform: none;
 }
 
+.brand-chip-asus {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
 .brand-chip-img {
   display: block;
   height: 24px;
@@ -1038,9 +1048,16 @@ svg {
   min-height: 42px;
 }
 
+.prize-brand-row .brand-chip {
+  min-width: 118px;
+  min-height: 42px;
+  background: #ffffff;
+  color: #11161c;
+}
+
 .prize-brand-row .brand-chip-img {
   height: 26px;
-  max-width: 96px;
+  max-width: 118px;
 }
 
 .challenge-identity h4 {

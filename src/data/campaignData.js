@@ -38,9 +38,9 @@ export const hero = {
 };
 
 export const infoStats = [
-  { id: 'trainings', label: 'Trainings', value: '8 of 14', qualifier: 'complete', progress: 57 },
+  { id: 'trainings', label: 'Trainings', value: '8 of 18', qualifier: 'complete', progress: 44 },
   { id: 'challenges', label: 'Challenges', value: '3 of 7', qualifier: 'complete', progress: 43 },
-  { id: 'store', label: 'Store', value: '3/4 reps', secondaryValue: '56/72 trainings', progress: 78 }
+  { id: 'store', label: 'Store', value: '1/4 participants', secondaryValue: '4/72 Trainings', progress: 6 }
 ];
 
 export const trainingWeeks = [
@@ -149,23 +149,23 @@ export const challenges = [
 
 export const storeChallenge = {
   status: 'Not yet qualified',
-  message: '1 more participant and 16 more trainings needed',
+  message: '3 more participant(s) and 68 more Trainings needed',
   criteria: [
     {
       id: 'participating-reps',
-      label: 'Criterion 1 · Participating Reps',
-      value: '3',
+      label: 'Criterion 1 · Participating Members',
+      value: '1',
       target: '/ 4 required',
-      progress: 75,
-      description: '4 or more RSPs from the same store must participate.'
+      progress: 25,
+      description: 'Store has at least 4 Members participating in Intel PC Champions.'
     },
     {
       id: 'total-trainings',
-      label: 'Criterion 2 · Total Promotional Trainings',
-      value: '56',
+      label: 'Criterion 2 · Featured Training Completions',
+      value: '4',
       target: '/ 72 required',
-      progress: 78,
-      description: 'Combined promotional training completions across participating RSPs.'
+      progress: 6,
+      description: 'Combined featured Training Completions across participating Members.'
     }
   ]
 };

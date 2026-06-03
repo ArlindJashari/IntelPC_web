@@ -7,15 +7,11 @@ function TermsIndex() {
     <section className="terms-index" aria-labelledby="terms-index-title">
       <p className="terms-kicker">Intel PC Champions 2026</p>
       <h1 id="terms-index-title">Terms and Conditions</h1>
-      <p className="terms-intro">
-        Four Official Rules versions are implemented. Backend audience logic can route users to the matching page.
-      </p>
 
       <div className="terms-card-grid">
         {termsPages.map((page) => (
           <a className="terms-card" href={`/terms/${page.slug}`} key={page.slug}>
             <span className="terms-card-title">{page.title}</span>
-            <span className="terms-card-audience">{page.audience}</span>
           </a>
         ))}
       </div>
@@ -25,22 +21,11 @@ function TermsIndex() {
 
 function TermsDocument({ page }) {
   return (
-    <section className="terms-document" aria-labelledby="terms-document-title">
-      <div className="terms-document-head">
-        <div>
-          <p className="terms-kicker">Terms and Conditions</p>
-          <h1 id="terms-document-title">{page.title}</h1>
-          <p className="terms-audience">{page.audience}</p>
-        </div>
-        <a className="terms-back-link" href="/terms">All Terms</a>
-      </div>
-
-      <iframe
-        className="terms-iframe"
-        src={page.documentPath}
-        title={page.title}
-      />
-    </section>
+    <iframe
+      className="terms-iframe terms-iframe-direct"
+      src={page.documentPath}
+      title={page.title}
+    />
   );
 }
 
@@ -50,6 +35,10 @@ export function TermsPage({ slug }) {
   useEffect(() => {
     document.title = page ? `${page.title} | Intel PC Champions 2026` : 'Terms and Conditions | Intel PC Champions 2026';
   }, [page]);
+
+  if (page) {
+    return <TermsDocument page={page} />;
+  }
 
   return (
     <div className="app-shell terms-shell">
@@ -70,7 +59,7 @@ export function TermsPage({ slug }) {
         <span className="page-screw screw-two" />
         <span className="page-screw screw-three" />
         <span className="page-screw screw-four" />
-        {page ? <TermsDocument page={page} /> : <TermsIndex />}
+        <TermsIndex />
       </main>
     </div>
   );

@@ -145,14 +145,14 @@ export function PrizesPanel({ retailer }) {
       <div className="notion-callout info-callout">
         <span className="notion-callout-icon" aria-hidden="true">🎁</span>
         <div className="notion-callout-content">
-          Exciting Rewards are up for grabs on your journey to become an Intel PC Champion! Weekly Drawings, Individual Grand Prize bundles, and Store Grand Prize celebrations!
+          Exciting Rewards are up for grabs on your journey to becoming an Intel PC Champion! Weekly Drawings, Individual Grand Prize bundles, and Store Grand Prize celebrations!
         </div>
       </div>
 
       <h3 className="section-title">Weekly Drawings</h3>
       <article className="prizes-section-card">
         <p className="prizes-section-intro">
-          Successfully complete the featured trainings in the week they are posted to earn entries into the Weekly Drawings.
+          Successfully complete the featured Trainings in the week they are posted to earn entries into the Weekly Drawings.
         </p>
 
         {/* Weekly Sub-Tabs */}
@@ -204,13 +204,14 @@ export function PrizesPanel({ retailer }) {
       <h3 className="section-title">Individual Grand Prize</h3>
       <article className="prizes-section-card">
         <p className="prizes-section-intro">
-          Complete all featured trainings within the promotion period to be automatically entered to win an Individual Grand Prize bundle. Complete Individual Challenges to earn additional entries.
+          Complete all featured Trainings within the Promotion Period to be automatically entered to win an Individual Grand Prize bundle. Complete Individual Challenges to earn additional Drawing entries.
         </p>
 
         <div className="prize-brand-row" aria-label="Challenge partner logos">
           <BrandMark brand="lenovo" />
-          <BrandMark brand="norton" />
           <BrandMark brand="acer" />
+          <BrandMark brand="ASUS" />
+          <BrandMark brand="norton" />
         </div>
 
         <div className="grand-prize-showcase">
@@ -220,7 +221,7 @@ export function PrizesPanel({ retailer }) {
               Intel PC Champion Bundle
             </h4>
             <p className="grand-prize-subtitle">
-              Fifteen (15) prize packages featuring a premium Series 3 Intel® Core™ Ultra-powered laptop and a SteelSeries gaming kits are up for grabs!
+              Fifteen (15) prize packages featuring a premium Series 3 Intel® Core™ Ultra processor-powered laptop and a SteelSeries gaming kits are up for grabs!
             </p>
           </div>
 
@@ -241,7 +242,7 @@ export function PrizesPanel({ retailer }) {
               <h5 className="details-list-title">Bundle Includes</h5>
               <ul className="grand-prize-list">
                 <li>
-                  <strong className="bullet-strong">Series 3 Intel® Core™ Ultra-powered laptop</strong>
+                  <strong className="bullet-strong">Series 3 Intel® Core™ Ultra processor-powered laptop</strong>
                 </li>
                 <li>
                   <strong className="bullet-strong">SteelSeries Arctis Nova Pro Wireless Headset (Black)</strong>
@@ -270,7 +271,7 @@ export function PrizesPanel({ retailer }) {
               Store Grand Prize Drawing
             </h4>
             <p className="store-grand-prize-desc">
-              At the end of the promotion, qualifying Best Buy stores we will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful training completions will have earned one (1) Drawing entry into the Store Grand Prize. Up to 10 winning Stores will be recognized with a store recognition plaque, individual recognition certificates, breakroom snacks, and multiple days of catering.
+              At the end of the promotion, qualifying Best Buy stores will be entered into a Drawing. All stores with a minimum of four (4) participants and a minimum total of 72 successful Training Completions will have earned one (1) Drawing entry into the Store Grand Prize. Up to ten (10) winning Stores will be recognized with a store recognition plaque, individual recognition certificates, breakroom snacks, and multiple days of catering.
             </p>
           </article>
         </>
