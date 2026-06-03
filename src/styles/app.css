@@ -1052,6 +1052,11 @@ svg {
   color: #11161c;
 }
 
+.prize-brand-row .brand-chip-norton {
+  flex-basis: clamp(128px, 11.2vw, 176px);
+  width: clamp(128px, 11.2vw, 176px);
+}
+
 .prize-brand-row .brand-chip-img {
   width: 100%;
   height: 100%;
